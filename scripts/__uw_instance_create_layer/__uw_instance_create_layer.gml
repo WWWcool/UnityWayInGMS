@@ -1,10 +1,13 @@
+// Unity way library see link for documentation
+// https://github.com/WWWcool/UnityWayInGMS/wiki
 /// Create instance with transform link to parent UWTransform
 ///
-/// @param _x The x position the object will be created at
-/// @param _y The y position the object will be created at
-/// @param _layer_id_or_name The layer ID (or name) to assign the created instance to
-/// @param _obj The object index of the object to create an instance of
-/// @param _parent UWObject base instance or UWObject or UWTransform to link this instance to
+/// @param {number} _x The x position the object will be created at
+/// @param {number} _y The y position the object will be created at
+/// @param {layer} _layer_id_or_name The layer ID (or name) to assign the created instance to
+/// @param {object} _obj The object index of the object to create an instance of
+/// @param {UWTransform} _parent UWObject base instance or UWObject or UWTransform to link this instance to
+/// @returns {object} created instance
 
 function __uw_instance_create_layer(_x, _y, _layer_id_or_name, _obj, _parentOrInst)
 {
@@ -15,23 +18,21 @@ function __uw_instance_create_layer(_x, _y, _layer_id_or_name, _obj, _parentOrIn
         var parent_transform = _uw_obj.GetComponentByTypeID(UW_TRANSFORM_TYPE_ID);
         if(parent_transform != noone)
         {
-            return parent_transform;
+            _parent = parent_transform;
         }
         else
         {
             var transform = new UWTransform(undefined, _uw_obj.id);
             _uw_obj.AddComponent(transform);
-			_uw_obj.id.__uw_transform = transform;
-            return transform;
+            _parent = transform;
         }
-		return undefined;
     }
     
     if(is_struct(_parentOrInst))
     {
         if(instanceof(_parentOrInst) == UW_BASE_NAME)
         {
-            _parent = _add_transform_func(_parentOrInst);
+            _add_transform_func(_parentOrInst);
         }
         else
         {
@@ -48,7 +49,7 @@ function __uw_instance_create_layer(_x, _y, _layer_id_or_name, _obj, _parentOrIn
             if(!__uw_check_instance(_parentOrInst))
                 return -1;
                 
-            _parent = _add_transform_func(_parentOrInst.__uw_obj);
+            _add_transform_func(_parentOrInst.__uw_obj);
         }
         else
         {
@@ -68,6 +69,4 @@ function __uw_instance_create_layer(_x, _y, _layer_id_or_name, _obj, _parentOrIn
     
     var transform = new UWTransform(_parent, _inst);
     _inst.__uw_obj.AddComponent(transform);
-	_inst.__uw_transform = transform;
-	return _inst;
 }

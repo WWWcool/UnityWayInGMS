@@ -1,10 +1,14 @@
+// Unity way library see link for documentation
+// https://github.com/WWWcool/UnityWayInGMS/wiki
+
 #macro UW_OBJECT_NAME "__uw_obj"
 #macro UW_BASE_NAME "UWObject"
 #macro UW_COMPONENT_NAME "UWComponent"
 
 /// Check if instance suitable for unity way
 ///
-/// @param _obj Instance id
+/// @param {object} _obj Instance id
+/// @returns {bool} check result
 
 function __uw_check_instance(_obj)
 {
@@ -18,17 +22,26 @@ function __uw_check_instance(_obj)
 }
 
 /// Base container for unity way logic
-/// @param _obj Instance id
+/// @param {object} _obj Instance id
+/// @returns {UWObject} created uw object
+
 function UWObject(_obj) constructor
 {
     id = _obj;
-    components = { };
+    components = {};
     components_names = [];
+    
+    /// Clear all components in object
     
     Clear = function()
     {
-        components = { };
+        components = {};
+        components_names = [];
     }
+    
+    /// Add component to object
+    /// @param {UWComponent} _cmp component to add
+    /// @returns {bool} result
     
     AddComponent = function(_cmp)
     {
@@ -42,6 +55,10 @@ function UWObject(_obj) constructor
         return true;
     }
     
+    /// Remove component from object
+    /// @param {UWComponent} _cmp component to remove
+    /// @returns {bool} result
+    
     RemoveComponent = function(_cmp)
     {
         if(!is_struct(_cmp))
@@ -54,6 +71,9 @@ function UWObject(_obj) constructor
         return true;
     }
     
+    /// @param {number} _type_id component type id
+    /// @returns {UWComponent} found component
+    
     GetComponentByTypeID = function(_type_id)
     {
         return findComponent(_type_id, function(_type_id, _cmp)
@@ -61,6 +81,9 @@ function UWObject(_obj) constructor
            return _cmp.type_id == _type_id;
         });
     }
+    
+    /// @param {string} _name component name
+    /// @returns {UWComponent} found component
     
     GetComponentByName = function(_name)
     {
@@ -95,11 +118,17 @@ function UWObject(_obj) constructor
 }
 
 /// Base component for unity way logic
+/// @param {number} _type_id component type id
+/// @param {string} _name component name
+/// @returns {UWComponent} created component
 
 function UWComponent(_type_id, _name) constructor
 {
     type_id = _type_id;
     name = _name;
+    
+    /// Throw error if function is not implemented
+    /// @param {string} _func_name name of not implemented function
     
     throwNotImplemented = function(_func_name)
     {
