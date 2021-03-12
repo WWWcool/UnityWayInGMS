@@ -3,6 +3,8 @@
 
 #macro UW_TRANSFORM_TYPE_ID 10001
 #macro UW_TRANSFORM_NAME "UWTransform"
+#macro UW_TRANSFORM_DEFINED true
+#macro UW_TRANSFORM_VERSION 1
 
 /// Position, rotation and scale of an object.
 /// @param {UWTransform} [_parent]

@@ -1,6 +1,10 @@
 // Unity way library see link for documentation
 // https://github.com/WWWcool/UnityWayInGMS/wiki
 
+#macro UW_VECTOR_NAME "UWVector2"
+#macro UW_VECTOR_DEFINED true
+#macro UW_VECTOR_VERSION 1
+
 /// Representation of 2D vectors and points.
 /// TODO: need unit test for this
 ///

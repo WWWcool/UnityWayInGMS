@@ -18,21 +18,23 @@ function __uw_instance_create_layer(_x, _y, _layer_id_or_name, _obj, _parentOrIn
         var parent_transform = _uw_obj.GetComponentByTypeID(UW_TRANSFORM_TYPE_ID);
         if(parent_transform != noone)
         {
-            _parent = parent_transform;
+            return parent_transform;
         }
         else
         {
             var transform = new UWTransform(undefined, _uw_obj.id);
             _uw_obj.AddComponent(transform);
-            _parent = transform;
+			_uw_obj.id.__uw_transform = transform;
+            return transform;
         }
+		return undefined;
     }
     
     if(is_struct(_parentOrInst))
     {
         if(instanceof(_parentOrInst) == UW_BASE_NAME)
         {
-            _add_transform_func(_parentOrInst);
+            _parent = _add_transform_func(_parentOrInst);
         }
         else
         {
@@ -49,7 +51,7 @@ function __uw_instance_create_layer(_x, _y, _layer_id_or_name, _obj, _parentOrIn
             if(!__uw_check_instance(_parentOrInst))
                 return -1;
                 
-            _add_transform_func(_parentOrInst.__uw_obj);
+            _parent = _add_transform_func(_parentOrInst.__uw_obj);
         }
         else
         {
@@ -69,4 +71,6 @@ function __uw_instance_create_layer(_x, _y, _layer_id_or_name, _obj, _parentOrIn
     
     var transform = new UWTransform(_parent, _inst);
     _inst.__uw_obj.AddComponent(transform);
+	_inst.__uw_transform = transform;
+	return _inst;
 }
