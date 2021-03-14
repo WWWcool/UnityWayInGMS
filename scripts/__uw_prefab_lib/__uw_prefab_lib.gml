@@ -297,19 +297,108 @@ function UWPrefabFactory(_id, _actions) constructor
 {
     id = _id
     actions = _actions;
-    instance = noone;
+    uw_objects = array_create(0);
+    
     
     InstanceCreateLayer = function(_x, _y, _layer_id_or_name)
     {
         var debug = new UWUtilsDebug(UW_PREFAB_PREFIX);
         debug.PrintlnIfDefined(UW_PREFAB_VERBOSE, "InstanceCreateLayer for prefab: " + id);
         debug.PrintlnIfDefined(UW_PREFAB_VERBOSE, "actions count: " + string(array_length(actions)));
+        var current_level = 0;
+        var inst = noone;
         for(var i = 0; i < array_length(actions); i++)
 		{
 		    var action = actions[i];
-		    debug.PrintlnWithIndentIfDefined(UW_PREFAB_VERBOSE, "action type: " + string(action.type), action.level);
+		    
+		    if(action.level < current_level)
+		    {
+		        array_pop(uw_objects);
+		    }
+		    
+		    var current_obj = array_length(uw_objects) > 0 ? array_get(uw_objects, array_length(uw_objects) - 1) : noone;
+		    
+		    switch(action.type)
+		    {
+		        case UWPrefabActionType.create_object:
+		            var parent = current_level == 0 ? noone : array_get(uw_objects, array_length(uw_objects) - 1);
+		            inst = instance_create_layer(_x, _y, _layer_id_or_name, action.data);
+		            if(instance_exists(inst))
+                    {
+                        if(!__uw_check_instance(inst))
+                            show_error("Fail to create instance that is not child of __uw_object", true);
+                            
+                        var transform = new UWTransform(parent, inst);
+                        inst.__uw_obj.AddComponent(transform);
+            			current_level = action.level;
+            			array_push(uw_objects, inst.__uw_obj);
+                    }
+		        break;
+		        case UWPrefabActionType.set_sprite:
+		            if(instance_exists(current_obj.transform.instance))
+		            {
+		                current_obj.transform.instance.sprite_index = action.data;
+		            }
+		            else
+		            {
+		                var sprite_renderer = current_obj.GetComponentByTypeID(UW_SPRITE_RENDERER_TYPE_ID);
+		                if(is_struct(sprite_renderer))
+		                {
+		                    sprite_renderer.SetSprite(action.data);
+		                }
+		            }
+		        break;
+		        case UWPrefabActionType.set_position_value:
+		            if(instance_exists(current_obj.transform.instance))
+		            {
+		                current_obj.transform.SetLocalPositionAndAngleAndScale(
+		                    action.data,
+		                    current_obj.transform.local_angle,
+		                    current_obj.transform.local_scale
+	                    );
+		            }
+		        break;
+		        case UWPrefabActionType.set_scale_value:
+		            if(instance_exists(current_obj.transform.instance))
+		            {
+		                current_obj.transform.SetLocalPositionAndAngleAndScale(
+		                    current_obj.transform.local_position,
+		                    current_obj.transform.local_angle,
+		                    action.data
+	                    );
+		            }
+		        break;
+		        case UWPrefabActionType.set_rotation_value:
+		            if(instance_exists(current_obj.transform.instance))
+		            {
+		                current_obj.transform.SetLocalPositionAndAngleAndScale(
+		                    current_obj.transform.local_position,
+		                    action.data,
+		                    current_obj.transform.local_scale
+	                    );
+		            }
+		        break;
+		        case UWPrefabActionType.set_origin_value:
+		            debug.PrintlnIfDefined(UW_PREFAB_VERBOSE, "Fail to set origin, reason: not implemented");
+		        break;
+		        case UWPrefabActionType.exec_script:
+		            var created_struct = action.data();
+		            if(instanceof(created_struct) == UW_BASE_NAME)
+		            {
+		                var transform = new UWTransform(current_obj.transform);
+                        created_struct.AddComponent(transform);
+            			current_level = action.level;
+            			array_push(uw_objects, created_struct);
+		            }
+		            else
+		            {
+		                current_obj.AddComponent(created_struct);
+		            }
+		        break;
+		    }
+		  //  debug.PrintlnWithIndentIfDefined(UW_PREFAB_VERBOSE, "action type: " + string(action.type), action.level);
 		}
-        return noone;
+        return inst;
     }
 }
 
@@ -336,4 +425,3 @@ function UWPrefabAction(_type, _data, _level) constructor
     data = _data;
     level = _level;
 }
-

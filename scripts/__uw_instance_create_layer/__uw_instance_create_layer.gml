@@ -15,16 +15,15 @@ function __uw_instance_create_layer(_x, _y, _layer_id_or_name, _obj, _parentOrIn
     
 	var _add_transform_func = function(_uw_obj)
     {
-        var parent_transform = _uw_obj.GetComponentByTypeID(UW_TRANSFORM_TYPE_ID);
-        if(parent_transform != noone)
+        var transform = _uw_obj.transform;
+        if(transform != noone)
         {
-            return parent_transform;
+            return transform;
         }
         else
         {
-            var transform = new UWTransform(undefined, _uw_obj.id);
+            transform = new UWTransform(noone, _uw_obj.id);
             _uw_obj.AddComponent(transform);
-			_uw_obj.id.__uw_transform = transform;
             return transform;
         }
 		return undefined;
@@ -71,6 +70,5 @@ function __uw_instance_create_layer(_x, _y, _layer_id_or_name, _obj, _parentOrIn
     
     var transform = new UWTransform(_parent, _inst);
     _inst.__uw_obj.AddComponent(transform);
-	_inst.__uw_transform = transform;
 	return _inst;
 }

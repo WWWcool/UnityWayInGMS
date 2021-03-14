@@ -27,6 +27,51 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
 		*** SEE LATE INIT AT THE END OF THIS FILE ***
 	***/
 	
+	/// Set the instance of the transform.
+    ///
+    /// @param {object} _obj
+    /// @param {bool} [_object_position_stays]
+    
+    SetInstance = function(_obj)
+    {
+        if(!instance_exists(_obj))
+            return;
+        
+        var _object_position_stays = argument_count > 1 ? argument[1] : true;
+        if(_object_position_stays)
+        {
+            instance = _obj;
+    		position = new UWVector2(instance.x, instance.y);
+    		angle = instance.image_angle;
+    		lossy_scale = new UWVector2(instance.image_xscale, instance.image_yscale);
+    		if(is_struct(parent))
+    		{
+    		    local_position = parent.InverseTransformVector(position);
+                local_angle = parent.InverseTransformDirection(angle);
+                local_scale = parent.InverseTransformScale(lossy_scale);
+    		}
+    		else
+    		{
+    		    local_position = position;
+                local_angle = angle;
+                local_scale = lossy_scale;
+    		}
+    		SetPositionAndAngleAndScale(position, angle, lossy_scale);
+        }
+        else
+        {
+            instance = _obj;
+            with(instance)
+            {
+                x = other.position.x;
+                y = other.position.y;
+                image_xscale = other.lossy_scale.x;
+                image_yscale = other.lossy_scale.y;
+                image_angle = other.angle;
+            }
+        }
+    }
+	
     /// Set the parent of the transform.
     ///
     /// @param {UWTransform} _transform
@@ -34,7 +79,7 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
     
     SetParent = function(_transform)
     {
-        var _world_position_stays = argument[1] == undefined ? true : argument[1];
+        var _world_position_stays = argument_count > 1 ? argument[1] : true;
         if(_transform != noone)
         {
             if(_world_position_stays)
@@ -342,20 +387,14 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
 	
 	// pass instance of controlled obj in constructor
 	
-    if(argument[1] != undefined)
+    if(argument_count > 1)
     {
-        instance = argument[1];
-		local_position = new UWVector2(instance.x, instance.y);
-		local_angle = instance.image_angle;
-		local_scale = new UWVector2(instance.image_xscale, instance.image_yscale);
-		position = new UWVector2(local_position.x, local_position.y);
-		angle = local_angle;
-		lossy_scale = new UWVector2(local_scale.x, local_scale.y);
+		SetInstance(argument[1])
     }
 	
 	// pass parent transform in constructor
 	
-    if(argument[0] != undefined)
+    if(argument_count > 0)
     {
         SetParent(argument[0], false);
     }

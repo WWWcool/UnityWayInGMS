@@ -12,17 +12,32 @@
 
 function UWSpriteRenderer(_sprite) : UWComponent(UW_SPRITE_RENDERER_TYPE_ID, UW_SPRITE_RENDERER_NAME) constructor
 {
-    sprite = _sprite;
+    sprite = argument[0] == undefined ? noone : _sprite;
     subimg = 0;
-    subimg_count = sprite_get_number(_sprite);
-    size = new UWVector2(sprite_get_width(_sprite), sprite_get_height(_sprite));
+    subimg_count = argument[0] == undefined ? 1 : sprite_get_number(_sprite);
+    size = argument[0] == undefined ? new UWVector2(0, 0) : new UWVector2(sprite_get_width(_sprite), sprite_get_height(_sprite));
     color = c_white;
     alpha = 1;
     flipX = false;
     flipY = false;
     
+    draw = function()
+    {
+        DrawSprite();
+    }
+    
+    SetSprite = function(_sprite)
+    {
+        sprite = _sprite;
+        subimg_count = sprite_get_number(_sprite);
+        size = new UWVector2(sprite_get_width(_sprite), sprite_get_height(_sprite));
+    }
+    
     DrawSprite = function()
     {
+        if(!sprite_exists(sprite))
+            return;
+        
         var transform = game_object.transform;
         if(flipX || flipY || alpha != 1 || transform.angle != 0)
         {
