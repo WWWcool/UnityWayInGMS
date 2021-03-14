@@ -1,9 +1,11 @@
-// Unity way library see link for documentation
+// Unity way library. For more information see the documentation here:
 // https://github.com/WWWcool/UnityWayInGMS/wiki
+
+#macro UW_DEPENDENCY_PREFIX "[UWDependencyTree]"
+#macro UW_DEPENDENCY_VERBOSE true
 
 #macro UW_VECTOR_DEFINED false
 #macro UW_TRANSFORM_DEFINED false
-#macro UW_TEST_DEFINED false
 
 #macro UW_VECTOR_NAME "UWVector2"
 #macro UW_TRANSFORM_NAME "UWTransform"
@@ -101,30 +103,23 @@ function UWDependencyValidateError(_name, _reason, _indent) constructor
 	reason = _reason;
 	indent = _indent;
 	
-    /// @returns {string} string with number of indent equals UWDependencyValidateError.indent
-	
-	GetIndentString = function()
-	{
-		var res = "";
-		repeat(indent)
-		{
-			res += "\t";
-		}
-		return res;
-	}
+	static debug = new UWUtilsDebug(UW_DEPENDENCY_PREFIX);
 	
 	/// @returns {string} formatted error
     
     FormatError = function()
 	{
-		return GetIndentString() + "Dependency * " + name + " * failed with reason: " + reason;
+		return debug.GetIndentString(indent) + "Dependency * " + name + " * failed with reason: " + reason;
 	}
 }
+
+/// Use macro redefinition to validate hardcoded dependency tree
 
 function __uw_validate_dep_tree()
 {
     gml_pragma("global", "__uw_validate_dep_tree()");
     
+    #region local functions
 	var check_deps = function(_dep_array)
 	{
 		var failed_deps = array_create(0);
@@ -138,24 +133,27 @@ function __uw_validate_dep_tree()
 	
 	var log_failed_deps = function(_cmp_name, _deps, _check_func)
 	{
+		var debug = new UWUtilsDebug(UW_DEPENDENCY_PREFIX);
 		var failed_deps = _check_func(_deps)
 		if(array_length(failed_deps) != 0)
 		{
-			show_debug_message("Component * " +_cmp_name + " * has not all dependencies defined:");
+			debug.PrintlnIfDefined(UW_DEPENDENCY_VERBOSE, "Component * " +_cmp_name + " * has not all dependencies defined:");
 			for(var i = 0; i < array_length(failed_deps); i++)
 			{
-				show_debug_message(failed_deps[i].FormatError());
+				debug.PrintlnIfDefined(UW_DEPENDENCY_VERBOSE, failed_deps[i].FormatError());
 			}
-			show_debug_message("****************** " + _cmp_name + " *\n");
+			debug.PrintlnIfDefined(UW_DEPENDENCY_VERBOSE, "****************** " + _cmp_name + " *\n");
 			return false;
 		}
 		return true;
 	}
+	#endregion
 	
-	var vector_deps = [];
+	var vector_deps = []; //[new UWDependency("Test", false, 1, 1, [])];
 	var transform_deps = [new UWDependency(UW_VECTOR_NAME, UW_VECTOR_DEFINED, UW_VECTOR_VERSION, UW_VECTOR_MIN_VERSION, vector_deps)];
 	
-	show_debug_message("\n\tValidate dependency tree:\n");
+	var debug = new UWUtilsDebug(UW_DEPENDENCY_PREFIX);
+	debug.PrintlnIfDefined(UW_DEPENDENCY_VERBOSE, "Validate dependency tree:");
 	
 	var validate_res = true;
 	
@@ -164,15 +162,10 @@ function __uw_validate_dep_tree()
 	
 	if(validate_res)
 	{
-		show_debug_message("\tValidation succeeded!\n");
+		debug.PrintlnIfDefined(UW_DEPENDENCY_VERBOSE, "Validation succeeded!");
 	}
 	else
 	{
-		show_debug_message("\tValidation failed! See __uw_dep_tree.gml for more information\n");
-	}
-	
-	if(!UW_TEST_DEFINED)
-	{
-		show_debug_message("\UW_TEST_DEFINED not overwritten!\n");
+		debug.PrintlnIfDefined(UW_DEPENDENCY_VERBOSE, "Validation failed! See __uw_dep_tree.gml for more information");
 	}
 }

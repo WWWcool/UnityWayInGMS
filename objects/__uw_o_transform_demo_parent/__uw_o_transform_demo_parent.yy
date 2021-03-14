@@ -31,8 +31,8 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Transform",
-    "path": "folders/UnityWay/Core/Transform.yy",
+    "name": "Demo",
+    "path": "folders/UnityWay/Core/Transform/Demo.yy",
   },
   "resourceVersion": "1.0",
   "name": "__uw_o_transform_demo_parent",

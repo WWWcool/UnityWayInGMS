@@ -1,4 +1,4 @@
-// Unity way library see link for documentation
+// Unity way library. For more information see the documentation here:
 // https://github.com/WWWcool/UnityWayInGMS/wiki
 /// Create instance with transform link to parent UWTransform
 ///

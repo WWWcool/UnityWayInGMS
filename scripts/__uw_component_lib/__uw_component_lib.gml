@@ -1,4 +1,4 @@
-// Unity way library see link for documentation
+// Unity way library. For more information see the documentation here:
 // https://github.com/WWWcool/UnityWayInGMS/wiki
 
 #macro UW_OBJECT_NAME "__uw_obj"
@@ -30,6 +30,7 @@ function UWObject(_obj) constructor
     id = _obj;
     components = {};
     components_names = [];
+    transform = noone;
     
     /// Clear all components in object
     
@@ -49,9 +50,15 @@ function UWObject(_obj) constructor
             return false;
         if(components[$ _cmp.type_id] != undefined)
             return false;
-            
+
+        if(instanceof(_cmp) == UW_TRANSFORM_NAME)
+        {
+            transform = _cmp;
+        }
+        
         components[$ _cmp.type_id] = _cmp;
         components_names = variable_struct_get_names(components);
+        _cmp.game_object = self;
         return true;
     }
     
@@ -126,6 +133,7 @@ function UWComponent(_type_id, _name) constructor
 {
     type_id = _type_id;
     name = _name;
+    game_object = noone;
     
     /// Throw error if function is not implemented
     /// @param {string} _func_name name of not implemented function

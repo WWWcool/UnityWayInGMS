@@ -1,16 +1,10 @@
 {
-  "spriteId": {
-    "name": "__uw_spr_transform_demo_child",
-    "path": "sprites/__uw_spr_transform_demo_child/__uw_spr_transform_demo_child.yy",
-  },
+  "spriteId": null,
   "solid": false,
   "visible": true,
   "spriteMaskId": null,
   "persistent": false,
-  "parentObjectId": {
-    "name": "__uw_object",
-    "path": "objects/__uw_object/__uw_object.yy",
-  },
+  "parentObjectId": null,
   "physicsObject": false,
   "physicsSensor": false,
   "physicsShape": 1,
@@ -23,15 +17,17 @@
   "physicsStartAwake": true,
   "physicsKinematic": false,
   "physicsShapePoints": [],
-  "eventList": [],
+  "eventList": [
+    {"isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,"parent":{"name":"__uw_o_prefab_demo","path":"objects/__uw_o_prefab_demo/__uw_o_prefab_demo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
+  ],
   "properties": [],
   "overriddenProperties": [],
   "parent": {
     "name": "Demo",
-    "path": "folders/UnityWay/Core/Transform/Demo.yy",
+    "path": "folders/UnityWay/PrefabBuilder/Demo.yy",
   },
   "resourceVersion": "1.0",
-  "name": "__uw_o_transform_demo_child",
+  "name": "__uw_o_prefab_demo",
   "tags": [],
   "resourceType": "GMObject",
 }

@@ -1,8 +1,7 @@
-// Unity way library see link for documentation
+// Unity way library. For more information see the documentation here:
 // https://github.com/WWWcool/UnityWayInGMS/wiki
 
 #macro UW_TRANSFORM_TYPE_ID 10001
-#macro UW_TRANSFORM_NAME "UWTransform"
 #macro UW_TRANSFORM_DEFINED true
 #macro UW_TRANSFORM_VERSION 1
 
@@ -98,14 +97,67 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
         position = _position;
         angle = _angle;
         lossy_scale = _scale;
-        with(instance)
+        
+        if(instance_exists(instance))
         {
-            x = _position.x;
-            y = _position.y;
-            image_xscale = _scale.x;
-            image_yscale = _scale.y;
-            image_angle = _angle;
+            with(instance)
+            {
+                x = other.position.x;
+                y = other.position.y;
+                image_xscale = other.lossy_scale.x;
+                image_yscale = other.lossy_scale.y;
+                image_angle = other.angle;
+            }
         }
+        
+        foreachChild(function(_child)
+        {
+            _child.SetPositionAndAngleAndScale
+            (
+                TransformVector(_child.local_position),
+                TransformDirection(_child.local_angle),
+                TransformScale(_child.local_scale)
+            );
+        });
+    }
+    
+    /// Sets the local space position, angle and scale of the Transform component.
+    ///
+    /// @param {UWVector2} _position
+    /// @param {number} _angle
+    /// @param {UWVector2} _scale
+    
+    SetLocalPositionAndAngleAndScale = function(_position, _angle, _scale)
+    {
+        local_position = _position;
+        local_angle = _angle;
+        local_scale = _scale;
+        
+        if(parent != noone)
+        {
+            position = parent.TransformVector(local_position);
+            angle = parent.TransformDirection(local_angle);
+            lossy_scale = parent.TransformScale(local_scale);
+        }
+        else
+        {
+            position = _position;
+            angle = _angle;
+            lossy_scale = _scale;
+        }
+        
+        if(instance_exists(instance))
+        {
+            with(instance)
+            {
+                x = other.position.x;
+                y = other.position.y;
+                image_xscale = other.lossy_scale.x;
+                image_yscale = other.lossy_scale.y;
+                image_angle = other.angle;
+            }
+        }
+        
         foreachChild(function(_child)
         {
             _child.SetPositionAndAngleAndScale

@@ -1,7 +1,6 @@
-// Unity way library see link for documentation
+// Unity way library. For more information see the documentation here:
 // https://github.com/WWWcool/UnityWayInGMS/wiki
 
-#macro UW_VECTOR_NAME "UWVector2"
 #macro UW_VECTOR_DEFINED true
 #macro UW_VECTOR_VERSION 1
 
@@ -238,5 +237,12 @@ function UWVector2(_x, _y) constructor
         var num1 = x - _vector.x;
         var num2 = y - _vector.y;
         return num1 * num1 + num2 * num2 < math_get_epsilon();
+    }
+    
+    /// @returns {string} formatted output
+    
+    ToString = function()
+    {
+        return "(" + string(x) + ", " + string(y) + ")";
     }
 }
