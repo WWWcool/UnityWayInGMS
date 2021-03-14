@@ -39,14 +39,26 @@ function __uw_prefab_create_factories()
             {
                 array_push(_context.actions, new UWPrefabAction(
                     UWPrefabActionType.exec_script,
-                    _index
+                    _index,
+                    _context.current_level
                 ));
                 _context.debug.PrintlnWithIndentIfDefined(
                     UW_PREFAB_VERBOSE,
                     "Add exec script action: " + track.name,
                     _indent
                 );
-                return track.name != "__uw_prefab_create_transform";
+                
+                var new_level = track.name == "__uw_prefab_create_transform";
+                if(new_level)
+                {
+                    _context.current_level++;
+                    _context.debug.PrintlnWithIndentIfDefined(
+                        UW_PREFAB_VERBOSE,
+                        "Level: " + string(_context.current_level),
+                        _indent
+                    );
+                }
+                return !new_level;
             } 
 		}
 		
@@ -59,8 +71,9 @@ function __uw_prefab_create_factories()
     {
     	var skip_default_tracks = _context.extract_actions_from_frames(self, _indent, _context);
     
-        // only for rack struct
-        if(variable_struct_exists(self, "type"))
+        // only for track struct
+        var is_track = variable_struct_exists(self, "type");
+        if(is_track)
         {
             // skip extract tracks for this types of track
             var skip_track = type == UW_PREFAB_SEQTYPE_GRAPHIC;
@@ -106,6 +119,21 @@ function __uw_prefab_create_factories()
     			}
     		}
     	}
+    	if(
+    	    is_track && 
+    	    (
+    	        type == UW_PREFAB_SEQTYPE_INSTANCE || !skip_default_tracks
+            )
+        )
+        {
+            _context.current_level--;
+            _context.debug.PrintlnWithIndentIfDefined(
+                UW_PREFAB_VERBOSE,
+                "Level: " + string(_context.current_level),
+                _indent
+            );
+        }
+    	
     }
     
     var extract_actions_from_frames = function(_struct, _indent, _context)
@@ -157,7 +185,7 @@ function __uw_prefab_create_factories()
 				                    msg = value.ToString();
     				            break;
     				        }
-    				        array_push(_context.actions, new UWPrefabAction(type, value));
+    				        array_push(_context.actions, new UWPrefabAction(type, value, _context.current_level));
                             _context.debug.PrintlnWithIndentIfDefined(
                                 UW_PREFAB_VERBOSE,
                                 "Add set value action... value: " + msg,
@@ -165,9 +193,16 @@ function __uw_prefab_create_factories()
                             );
     				    break;
     				    case UW_PREFAB_SEQTYPE_INSTANCE:
+    				        _context.current_level++;
+    				        _context.debug.PrintlnWithIndentIfDefined(
+                                UW_PREFAB_VERBOSE,
+                                "Level: " + string(_context.current_level),
+                                _indent
+                            );
     				        array_push(_context.actions, new UWPrefabAction(
                                 UWPrefabActionType.create_object,
-                                frame.channels[0].objectIndex
+                                frame.channels[0].objectIndex,
+                                _context.current_level
                             ));
                             _context.debug.PrintlnWithIndentIfDefined(
                                 UW_PREFAB_VERBOSE,
@@ -178,7 +213,8 @@ function __uw_prefab_create_factories()
     				    case UW_PREFAB_SEQTYPE_GRAPHIC:
     				        array_push(_context.actions, new UWPrefabAction(
                                 UWPrefabActionType.set_sprite,
-                                frame.channels[0].spriteIndex
+                                frame.channels[0].spriteIndex,
+                                _context.current_level
                             ));
                             _context.debug.PrintlnWithIndentIfDefined(
                                 UW_PREFAB_VERBOSE,
@@ -218,7 +254,7 @@ function __uw_prefab_create_factories()
             }
             return "unknown_seqtracktype";
         },
-        // current_uw_object : noone,
+        current_level : 0,
         actions : [],
         extract_actions_from_seq : extract_actions_from_seq,
         extract_actions_from_tracks : extract_actions_from_tracks,
@@ -268,6 +304,11 @@ function UWPrefabFactory(_id, _actions) constructor
         var debug = new UWUtilsDebug(UW_PREFAB_PREFIX);
         debug.PrintlnIfDefined(UW_PREFAB_VERBOSE, "InstanceCreateLayer for prefab: " + id);
         debug.PrintlnIfDefined(UW_PREFAB_VERBOSE, "actions count: " + string(array_length(actions)));
+        for(var i = 0; i < array_length(actions); i++)
+		{
+		    var action = actions[i];
+		    debug.PrintlnWithIndentIfDefined(UW_PREFAB_VERBOSE, "action type: " + string(action.type), action.level);
+		}
         return noone;
     }
 }
@@ -286,11 +327,13 @@ enum UWPrefabActionType
 /// Action that can create or change object or component struct.
 /// @param {UWPrefabActionType} _type action context
 /// @param _data data specific for action type
+/// @param _level level on witch action should exec
 /// @returns {UWPrefabAction} created action
 
-function UWPrefabAction(_type, _data) constructor
+function UWPrefabAction(_type, _data, _level) constructor
 {
     type = _type;
     data = _data;
+    level = _level;
 }
 
