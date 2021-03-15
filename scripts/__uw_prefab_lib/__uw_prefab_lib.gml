@@ -306,6 +306,7 @@ function UWPrefabFactory(_id, _actions) constructor
         debug.PrintlnIfDefined(UW_PREFAB_VERBOSE, "InstanceCreateLayer for prefab: " + id);
         debug.PrintlnIfDefined(UW_PREFAB_VERBOSE, "actions count: " + string(array_length(actions)));
         var current_level = 0;
+        var root_level = 0;
         var inst = noone;
         for(var i = 0; i < array_length(actions); i++)
 		{
@@ -313,26 +314,46 @@ function UWPrefabFactory(_id, _actions) constructor
 		    
 		    if(action.level < current_level)
 		    {
-		        array_pop(uw_objects);
+		        var obj = array_pop(uw_objects);
 		    }
+		    
+		  //  debug.PrintlnWithIndentIfDefined(UW_PREFAB_VERBOSE, "uw_objects count: " + string(array_length(uw_objects)), action.level);
 		    
 		    var current_obj = array_length(uw_objects) > 0 ? array_get(uw_objects, array_length(uw_objects) - 1) : noone;
 		    
 		    switch(action.type)
 		    {
 		        case UWPrefabActionType.create_object:
-		            var parent = current_level == 0 ? noone : array_get(uw_objects, array_length(uw_objects) - 1);
-		            inst = instance_create_layer(_x, _y, _layer_id_or_name, action.data);
-		            if(instance_exists(inst))
-                    {
-                        if(!__uw_check_instance(inst))
-                            show_error("Fail to create instance that is not child of __uw_object", true);
-                            
-                        var transform = new UWTransform(parent, inst);
-                        inst.__uw_obj.AddComponent(transform);
-            			current_level = action.level;
-            			array_push(uw_objects, inst.__uw_obj);
-                    }
+		            
+		            if(current_level == 0)
+		            {
+		                inst = instance_create_layer(_x, _y, _layer_id_or_name, action.data);
+		                if(instance_exists(inst))
+                        {
+                            if(!__uw_check_instance(inst))
+                                show_error("Fail to create instance that is not child of __uw_object", true);
+                                
+                            var transform = new UWTransform(noone, inst);
+                            inst.__uw_obj.AddComponent(transform);
+                            root_level = action.level;
+                			array_push(uw_objects, inst.__uw_obj);
+                        }
+		            }
+		            else
+		            {
+		                inst = instance_create_layer(0, 0, _layer_id_or_name, action.data);
+		                if(instance_exists(inst))
+                        {
+                            if(!__uw_check_instance(inst))
+                                show_error("Fail to create instance that is not child of __uw_object", true);
+                                
+                            var transform = new UWTransform(current_obj, inst);
+                            inst.__uw_obj.AddComponent(transform);
+                			array_push(uw_objects, inst.__uw_obj);
+                        }
+		            }
+		            
+		            
 		        break;
 		        case UWPrefabActionType.set_sprite:
 		            if(instance_exists(current_obj.transform.instance))
@@ -349,7 +370,15 @@ function UWPrefabFactory(_id, _actions) constructor
 		            }
 		        break;
 		        case UWPrefabActionType.set_position_value:
-		            if(instance_exists(current_obj.transform.instance))
+		            if(root_level == current_level)
+		            {
+		                current_obj.transform.SetLocalPositionAndAngleAndScale(
+		                    current_obj.transform.local_position.Add(action.data),
+		                    current_obj.transform.local_angle,
+		                    current_obj.transform.local_scale
+	                    );
+		            }
+		            else
 		            {
 		                current_obj.transform.SetLocalPositionAndAngleAndScale(
 		                    action.data,
@@ -387,7 +416,6 @@ function UWPrefabFactory(_id, _actions) constructor
 		            {
 		                var transform = new UWTransform(current_obj.transform);
                         created_struct.AddComponent(transform);
-            			current_level = action.level;
             			array_push(uw_objects, created_struct);
 		            }
 		            else
@@ -396,6 +424,7 @@ function UWPrefabFactory(_id, _actions) constructor
 		            }
 		        break;
 		    }
+		    current_level = action.level;
 		  //  debug.PrintlnWithIndentIfDefined(UW_PREFAB_VERBOSE, "action type: " + string(action.type), action.level);
 		}
         return inst;

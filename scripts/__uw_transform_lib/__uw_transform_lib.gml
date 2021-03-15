@@ -27,6 +27,16 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
 		*** SEE LATE INIT AT THE END OF THIS FILE ***
 	***/
 	
+	/// Get info string specific for this component
+    /// @returns {string} info
+    
+    GetInfo = function()
+    {
+        return "position: " + position.ToString() + 
+        " angle: " + string(angle) + 
+        " scale: " + lossy_scale.ToString();
+    }
+	
 	/// Set the instance of the transform.
     ///
     /// @param {object} _obj
@@ -155,7 +165,7 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
             }
         }
         
-        foreachChild(function(_child)
+        ForeachChild(function(_child)
         {
             _child.SetPositionAndAngleAndScale
             (
@@ -203,7 +213,7 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
             }
         }
         
-        foreachChild(function(_child)
+        ForeachChild(function(_child)
         {
             _child.SetPositionAndAngleAndScale
             (
@@ -334,7 +344,7 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
     
     DetachChildren = function()
     {
-        foreachChild(function(_child){_child.SetParent(noone);});
+        ForeachChild(function(_child){_child.SetParent(noone);});
         childs = [];
     }
     
@@ -373,13 +383,21 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
         return noone;
     }
     
-    // private section
-    
-    foreachChild = function(_func)
+    ForeachChild = function(_func)
     {
-        for(var i = 0; i < childCount(); i++)
+        if(argument_count > 1)
         {
-            _func(childs[i]);
+            for(var i = 0; i < childCount(); i++)
+            {
+                _func(childs[i], argument[1]);
+            }
+        }
+        else
+        {
+            for(var i = 0; i < childCount(); i++)
+            {
+                _func(childs[i]);
+            }
         }
     }
 	

@@ -26,6 +26,14 @@ function UWSpriteRenderer(_sprite) : UWComponent(UW_SPRITE_RENDERER_TYPE_ID, UW_
         DrawSprite();
     }
     
+    /// Get info string specific for this component
+    /// @returns {string} info
+    
+    GetInfo = function()
+    {
+        return "sprite: " + string(sprite);
+    }
+    
     SetSprite = function(_sprite)
     {
         sprite = _sprite;

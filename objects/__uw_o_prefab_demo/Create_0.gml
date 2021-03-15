@@ -8,5 +8,6 @@ if(variable_global_exists("__uw_prefab_factories"))
 	if(instance_exists(inst))
 	{
 		show_debug_message("Instance create!!!!");
+		inst.__uw_obj.ShowHierarchy(0);
 	}
 }

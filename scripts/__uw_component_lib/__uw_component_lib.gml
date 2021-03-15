@@ -38,6 +38,61 @@ function UWObject() constructor
     groups = {};
     groups_names = [];
     
+    /// Print all components and childs of object
+    /// @param {number} _indent
+    
+    ShowHierarchy = function(_indent)
+    {
+        var debug = new UWUtilsDebug("");
+        var context =
+        {
+            debug : debug,
+            indent : _indent
+        }
+        
+        debug.PrintlnWithIndent(
+            "object: " + string(id),
+            context.indent
+        );
+        
+        for(var i = 0; i < array_length(groups_names); i++)
+        {
+            debug.PrintlnWithIndent(
+                "group: " + groups_names[i],
+                context.indent
+            );
+            var group = groups[$ groups_names[i]];
+            for(var k = 0; k < array_length(group.components); k++)
+            {
+                debug.PrintlnWithIndent(
+                    "cmp: " + group.components[k].name,
+                    context.indent
+                );
+            }
+        }
+        
+        MapComponents(
+            function(_cmp, _context)
+            {
+                _context.debug.PrintlnWithIndent(
+                    "cmp: " + _cmp.name + " " + _cmp.GetInfo(),
+                    _context.indent
+                );
+            },
+            context
+        );
+        if(is_struct(transform))
+        {
+            transform.ForeachChild(
+                function(_transform, _context)
+                {
+                    _transform.game_object.ShowHierarchy(_context.indent + 1);
+                },
+                context
+            );
+        }
+    }
+    
     /// Link uw object to game object
     
     LinkToInstance = function(_inst)
@@ -81,10 +136,12 @@ function UWObject() constructor
             // TODO: use something like event to handle set new parent in transform cmp
             if(id == noone && parent != noone)
             {
+                show_debug_message("Copy groups");
                 var names = parent.game_object.groups_names;
                 for(var i = 0; i < array_length(names); i++)
                 {
-                    groups[$ names[i]] = parent.game_object.groups[$ names[i]].CreateInstance();
+                    var group = parent.game_object.groups[$ names[i]];
+                    AddGroup(group.type, group.check_func, group.exec_func);
                 }
             }
         }
@@ -92,6 +149,7 @@ function UWObject() constructor
         components[$ _cmp.type_id] = _cmp;
         components_names = variable_struct_get_names(components);
         _cmp.game_object = self;
+        TryToAddToGroups(_cmp);
         return true;
     }
     
@@ -106,6 +164,7 @@ function UWObject() constructor
         if(components[$ _cmp.type_id] == undefined)
             return true;
             
+        RemoveFromGroups(_cmp);
         variable_struct_remove(components, _cmp.type_id);
         components_names = variable_struct_get_names(components);
         return true;
@@ -124,10 +183,13 @@ function UWObject() constructor
     
     GetComponentByName = function(_name)
     {
-        return findComponent(_name, function(_name, _cmp)
-        { 
-            return _cmp.name == _name;
-        });
+        return FindComponent(
+            function(_cmp, _name)
+            { 
+                return _cmp.name == _name;
+            },
+            _name
+        );
     }
     
     /// Trigger this function to emit create event for all components already added to object
@@ -149,6 +211,14 @@ function UWObject() constructor
 
         groups[$ _type] = new UWComponentGroup(_type, _check_func, _exec_func);
         groups_names = variable_struct_get_names(groups);
+        MapComponents(
+            function(_cmp, _group)
+            {
+                _group.TryAddComponent(_cmp);
+            },
+            groups[$ _type]
+        );
+        show_debug_message("AddGroup: " + _type);
         return true;
     }
     
@@ -185,28 +255,71 @@ function UWObject() constructor
             groups[$ _type].Execute(argument[1]);
         else
             groups[$ _type].Execute();
-    }
-    
-    // private section
-    
-    mapComponents = function(_map_action)
-    {
-    	for(var i = 0; i < array_length(components_names); i++)
+            
+        if(is_struct(transform))
         {
-            _map_action(components[$ components_names[i]]);
+            transform.ForeachChild(
+                function(_transform, _type)
+                {
+                    _transform.game_object.ExecuteGroup(_type);
+                },
+                _type
+            );
         }
     }
     
-    findComponent = function(_arg, _find_func)
+    /// Map all component with passed function and optional arguments
+    /// @param _map_func
+    /// @param _arg some args passed to function
+    
+    MapComponents = function(_map_func)
     {
-        for(var i = 0; i < array_length(components_names); i++)
+        if(argument_count > 1)
         {
-            var cmp = components[$ components_names[i]];
-            if(_find_func(_arg, cmp))
+            for(var i = 0; i < array_length(components_names); i++)
             {
-                return cmp;
+                _map_func(components[$ components_names[i]], argument[1]);
             }
         }
+        else
+        {
+            for(var i = 0; i < array_length(components_names); i++)
+            {
+                _map_func(components[$ components_names[i]]);
+            }
+        }
+    }
+    
+    /// Find component with passed find func
+    /// @param _find_func
+    /// @param _arg some args passed to function
+    /// @returns {UWComponent} found component
+    
+    FindComponent = function(_find_func)
+    {
+        if(argument_count > 1)
+        {
+            for(var i = 0; i < array_length(components_names); i++)
+            {
+                var cmp = components[$ components_names[i]];
+                if(_find_func(cmp, argument[1]))
+                {
+                    return cmp;
+                }
+            }
+        }
+        else
+        {
+            for(var i = 0; i < array_length(components_names); i++)
+            {
+                var cmp = components[$ components_names[i]];
+                if(_find_func(cmp))
+                {
+                    return cmp;
+                }
+            }
+        }
+        
         return noone;
     }
 }
@@ -221,6 +334,14 @@ function UWComponent(_type_id, _name) constructor
     type_id = _type_id;
     name = _name;
     game_object = noone;
+    
+    /// Get info string specific for this component
+    /// @returns {string} info
+    
+    GetInfo = function()
+    {
+        return "";
+    }
     
     /// Throw error if function is not implemented
     /// @param {string} _func_name name of not implemented function
@@ -293,14 +414,6 @@ function UWComponentGroup(_type, _check_func, _exec_func) constructor
                 exec_func(components[i]);
             }
         }
-    }
-    
-    /// Create instance of this group, use this to duplicate parent groups to child and trigger them
-    /// @returns {UWComponentGroup} created group
-
-    CreateInstance = function()
-    {
-        return new UWComponentGroup(type, check_func, exec_func);
     }
 }
 
