@@ -64,6 +64,9 @@ function UWDelegate(_size) constructor
         return true;
     }
     
+    /// @param {object|instance|struct|void} [_context]
+    /// @returns {UWDelegate}
+    
     static Run = function() 
     {
         RuntimeError();
@@ -136,6 +139,9 @@ function UWDelegate(_size) constructor
         }
     }
     
+    /// @param {object|instance|struct} _context
+    /// @returns {string}
+    
     static CheckContext = function(_context)
     {
         if(is_struct(_context))
@@ -153,6 +159,9 @@ function UWDelegate(_size) constructor
         return "error";
     }
     
+    /// @param {number} _count
+    /// @returns {number}
+    
     static CountRemove = function(_count)
     {
         if(is_real(_count))
@@ -164,6 +173,9 @@ function UWDelegate(_size) constructor
         }
         return 0;
     }
+    
+    /// @param {number} _count
+    /// @returns {number}
     
     static ContextError = function(_context)
     {
