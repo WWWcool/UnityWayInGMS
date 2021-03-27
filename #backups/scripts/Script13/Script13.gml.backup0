@@ -1,0 +1,7 @@
+// 2021-03-27 23:00:05
+
+
+
+var a = new UWUtilsError();
+a.AddText(false,"hello");
+a.Show();

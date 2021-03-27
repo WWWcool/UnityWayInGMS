@@ -1,0 +1,176 @@
+// 2021-03-28 01:10:21
+// Unity way library. For more information see the documentation here:
+// https://github.com/WWWcool/UnityWayInGMS/wiki
+
+
+
+function UWDelegate(_size) constructor
+{
+    stack = [];
+    limit = infinity;
+    bind = undefined;
+    run = false;
+    
+    static Bind = function(_instance_or_struct) 
+    {
+        RuntimeError();
+        
+        if(is_undefined(_instance_or_struct))
+        {
+            bind = undefined;
+            return self;
+        }
+        
+        var type = CheckContext(_instance_or_struct);
+        if(type != "error")
+        {
+            bind = _instance_or_struct;
+            return self;
+        }
+        
+        ContextError(_instance_or_struct);
+    }
+    
+    static IsCanAdd = function() 
+    {
+        return (array_length(stack) < limit);
+    }
+    
+    static Add = function(_method_or_function, _argument)
+    {
+        RuntimeError();
+        
+        if(!IsCanAdd()) 
+            return false;
+        
+        if(is_method(_method_or_function)) 
+            _method_or_function = method_get_index(_method_or_function);
+        
+        var _cell =
+        {
+            execute: _method_or_function,
+            arg: _argument
+        }
+        
+        array_push(stack, _cell);
+        return true;
+    }
+    
+    static Run = function() 
+    {
+        RuntimeError();
+        
+        var _size = array_length(stack);
+        if(_size)
+        {
+            var _context = bind;
+            
+            if(argument_count > 0)
+                _context = argument[0];
+            
+            if(_context == undefined) 
+                _context = other;
+            else
+            {
+                if(CheckContext(_context) == "error") ContextError(_context);
+            }
+            
+            run = true;
+            with (_context)
+            {
+                var _i = 0, _cell;
+                do
+                {
+                    _cell = stack[_i];
+                    _cell.execute(_cell.arg) break;
+                } until (++_i == _size);
+            }
+            run = false;
+        }
+        return self;
+    }
+    
+    static Clear = function()
+    {
+        RuntimeError();
+        stack = [];
+    }
+    
+    static RemoveFromBegin = function(_count)
+    {
+        RuntimeError();
+        
+        var size = CountRemove(_count);
+        if(size)
+        {
+            array_delete(stack, 0, _count);
+        }
+    }
+    
+    static RemoveFromEnd = function(_count)
+    {
+        RuntimeError();
+        
+        var size = CountRemove(_count);
+        if(size)
+        {
+            array_resize(stack, array_length(_count) - _count);
+        }
+    }
+    
+    static LimitResize = function(_newsize) 
+    {
+        RuntimeError();
+        
+        if(is_real(_newsize))
+        {
+            limit = (is_nan(_newsize) ? 1 : max(_newsize, 1));
+        }
+    }
+    
+    static CheckContext = function(_context)
+    {
+        if(is_struct(_context))
+        {
+            return "struct";
+        }
+        
+        if(is_real(_context))
+        {
+            if(instance_exists(_instance_or_struct))
+            {
+                return "instance";
+            }
+        }
+        return "error";
+    }
+    
+    static CountRemove = function(_count)
+    {
+        if(is_real(_count))
+        {
+            if(is_nan(_count))
+                return 0;
+            
+            return clamp(_count, 0, array_length(stack));
+        }
+        return 0;
+    }
+    
+    static ContextError = function(_context)
+    {
+        var error = new UWUtilsError(self);
+        error.AddText("You cannot bind a delegate to a non-existent object: ").AddArgument(_context);
+        error.Show();
+    }
+    
+    static RuntimeError = function()
+    {
+        if(run)
+        {
+            var error = new UWUtilsError(self);
+            error.AddText("You cannot use a deligate when processing its call stack");
+            error.Show();
+        }
+    }
+}
