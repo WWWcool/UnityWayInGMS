@@ -25,7 +25,7 @@
     {"id":{"name":"__uw_prefab_dummy","path":"objects/__uw_prefab_dummy/__uw_prefab_dummy.yy",},"order":2,},
     {"id":{"name":"__uw_prefab_lib","path":"scripts/__uw_prefab_lib/__uw_prefab_lib.yy",},"order":0,},
     {"id":{"name":"__uw_utils_debug","path":"scripts/__uw_utils_debug/__uw_utils_debug.yy",},"order":0,},
-    {"id":{"name":"__uw_execute_list_lib","path":"scripts/__uw_execute_list_lib/__uw_execute_list_lib.yy",},"order":0,},
+    {"id":{"name":"__uw_delegate_lib","path":"scripts/__uw_delegate_lib/__uw_delegate_lib.yy",},"order":0,},
     {"id":{"name":"__uw_utils_error","path":"scripts/__uw_utils_error/__uw_utils_error.yy",},"order":0,},
   ],
   "Options": [

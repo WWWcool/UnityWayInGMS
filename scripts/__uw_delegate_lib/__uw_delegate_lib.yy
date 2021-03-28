@@ -6,7 +6,7 @@
     "path": "folders/UnityWay/DelegateBuilder.yy",
   },
   "resourceVersion": "1.0",
-  "name": "__uw_execute_list_lib",
+  "name": "__uw_delegate_lib",
   "tags": [],
   "resourceType": "GMScript",
 }

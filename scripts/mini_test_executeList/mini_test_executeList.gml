@@ -1,18 +1,21 @@
 
-function message_build(_prefix, _text)
+
+var object = {key: "hello"};
+var delegate = new UWDelegate();
+
+delegate.Add(function(context)
 {
-	text += string(_prefix) + string(_text) + "\n";
-}
+	show_message(context.key);
+})
 
-
-var object = {text: ""};
-var exec = new UWExecuteList().Bind(object);
-exec.Add(message_build, " hello");
-exec.Add(message_build, " how are you");
-exec.Add(function()
+delegate.Add(function(context)
 {
-	show_message(text);
-});
+	show_message(context.key);
+})
 
-exec.Run("ПУТИН ГОВОРИТ: ");
-show_message(object.text);
+delegate.Add(function()
+{
+	show_message("the end");
+})
+
+delegate.Run(object);
