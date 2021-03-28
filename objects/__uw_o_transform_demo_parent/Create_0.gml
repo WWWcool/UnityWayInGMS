@@ -19,6 +19,3 @@ var child2 = __uw_instance_create_layer(
 	__uw_o_transform_demo_child,
 	child.id
 );
-
-__uw_obj.AddComponent(new UWLoop());
-var interface = __uw_obj.GetComponentByName(UW_LOOP_NAME);

@@ -2,8 +2,8 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Utils",
-    "path": "folders/UnityWay/Core/Utils.yy",
+    "name": "bargare",
+    "path": "folders/bargare.yy",
   },
   "resourceVersion": "1.0",
   "name": "__uw_utils_error",

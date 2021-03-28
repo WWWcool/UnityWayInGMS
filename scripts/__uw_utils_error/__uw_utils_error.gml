@@ -102,7 +102,7 @@ function UWUtilsError(_type) constructor
 		return self;
 	}
 	
-	/// @returns {string}
+	/// @returns {bool}
 	
 	static TabInsert = function()
 	{
