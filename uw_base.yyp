@@ -24,6 +24,7 @@
     {"id":{"name":"__uw_prefab_dummy","path":"objects/__uw_prefab_dummy/__uw_prefab_dummy.yy",},"order":2,},
     {"id":{"name":"__uw_prefab_lib","path":"scripts/__uw_prefab_lib/__uw_prefab_lib.yy",},"order":0,},
     {"id":{"name":"__uw_utils_debug","path":"scripts/__uw_utils_debug/__uw_utils_debug.yy",},"order":0,},
+    {"id":{"name":"__uw_string_extension","path":"scripts/__uw_string_extension/__uw_string_extension.yy",},"order":3,},
   ],
   "Options": [
     {"name":"HTML5","path":"options/html5/options_html5.yy",},
