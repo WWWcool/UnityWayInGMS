@@ -53,23 +53,7 @@ function __uw_prefab_create_factories()
                 {
                 	for(var i = len - 2; i >= 0; i--)
                 	{
-                		var parts = string_split(_data.tracks[i].name, "_");
-                		if(array_length(parts) > 2)
-                		{
-                			var value_data_type = _context.map_action_data_type(parts[0]);
-                			var value_data = new UWPrefabSetValueData(value_data_type, parts[1]);
-                			value_data.SetDataFrom(parts[2]);
-                			array_push(_context.actions, new UWPrefabAction(
-			                    UWPrefabActionType.set_value,
-			                    value_data,
-			                    _context.current_level
-			                ));
-			                _context.debug.PrintlnWithIndentIfDefined(
-			                    UW_PREFAB_VERBOSE,
-			                    "Add set value action: " + _data.tracks[i].name,
-			                    _indent
-			                );
-                		}
+                		_context.parse_group_argument(_data.tracks[i].name, _indent, _context);
                 	}
                 }
                 
@@ -119,6 +103,17 @@ function __uw_prefab_create_factories()
         			|| track.name == UW_PREFAB_DEFAULT_TRACK_SCALE
         			|| track.name == UW_PREFAB_DEFAULT_TRACK_ROTATION
         			|| track.name == UW_PREFAB_DEFAULT_TRACK_ORIGIN;
+        			
+        		if(track.type == UW_PREFAB_SEQTYPE_GROUP)
+        		{
+        			_context.debug.PrintlnWithIndentIfDefined(
+    					UW_PREFAB_VERBOSE,
+    					"Track: " + track.name + " type: " + _context.map_type(track.type),
+    					_indent
+    				);
+        			_context.parse_group_argument(track.name, _indent, _context);
+        			continue;
+        		}
     			
     			if(default_track)
     			{
@@ -259,6 +254,27 @@ function __uw_prefab_create_factories()
 		return skip_default_tracks;
     }
     
+    var parse_group_argument = function(_track_name, _indent, _context)
+    {
+    	var parts = string_split(_track_name, "/");
+		if(array_length(parts) > 2)
+		{
+			var value_data_type = _context.map_action_data_type(parts[0]);
+			var value_data = new UWPrefabSetValueData(value_data_type, parts[1]);
+			value_data.SetDataFrom(parts[2]);
+			array_push(_context.actions, new UWPrefabAction(
+                UWPrefabActionType.set_value,
+                value_data,
+                _context.current_level
+            ));
+            _context.debug.PrintlnWithIndentIfDefined(
+                UW_PREFAB_VERBOSE,
+                "Add set value action: " + _track_name,
+                _indent
+            );
+		}
+    }
+    
     #endregion
     
     var context =
@@ -295,7 +311,8 @@ function __uw_prefab_create_factories()
         actions : [],
         extract_actions_from_seq : extract_actions_from_seq,
         extract_actions_from_tracks : extract_actions_from_tracks,
-        extract_actions_from_frames : extract_actions_from_frames
+        extract_actions_from_frames : extract_actions_from_frames,
+        parse_group_argument : parse_group_argument
     }
 
     context.debug.double_indent = true;
@@ -336,7 +353,6 @@ function UWPrefabFactory(_id, _actions) constructor
     actions = _actions;
     uw_objects = array_create(0);
     
-    
     InstanceCreateLayer = function(_x, _y, _layer_id_or_name)
     {
         var debug = new UWUtilsDebug(UW_PREFAB_PREFIX);
@@ -346,6 +362,7 @@ function UWPrefabFactory(_id, _actions) constructor
         var root_level = 0;
         var inst = noone;
         var last_created_struct = noone;
+        var need_update_last = false;
         for(var i = 0; i < array_length(actions); i++)
 		{
 		    var action = actions[i];
@@ -353,11 +370,18 @@ function UWPrefabFactory(_id, _actions) constructor
 		    if(action.level < current_level)
 		    {
 		        var obj = array_pop(uw_objects);
+		        need_update_last = true;
 		    }
 		    
 		  //  debug.PrintlnWithIndentIfDefined(UW_PREFAB_VERBOSE, "uw_objects count: " + string(array_length(uw_objects)), action.level);
 		    
 		    var current_obj = array_length(uw_objects) > 0 ? array_get(uw_objects, array_length(uw_objects) - 1) : noone;
+		    
+		    if(need_update_last)
+		    {
+		    	need_update_last = false;
+		    	last_created_struct = current_obj.id != noone ? current_obj.id : current_obj;
+		    }
 		    
 		    switch(action.type)
 		    {
