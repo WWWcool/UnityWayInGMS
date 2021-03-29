@@ -1,8 +1,5 @@
 {
-  "spriteId": {
-    "name": "__uw_spr_transform_demo_child",
-    "path": "sprites/__uw_spr_transform_demo_child/__uw_spr_transform_demo_child.yy",
-  },
+  "spriteId": null,
   "solid": false,
   "visible": true,
   "spriteMaskId": null,
@@ -23,15 +20,17 @@
   "physicsStartAwake": true,
   "physicsKinematic": false,
   "physicsShapePoints": [],
-  "eventList": [],
+  "eventList": [
+    {"isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,"parent":{"name":"__uw_o_delegate_demo","path":"objects/__uw_o_delegate_demo/__uw_o_delegate_demo.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
+  ],
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Transform",
-    "path": "folders/UnityWayDemo/Core/Transform.yy",
+    "name": "Delegate",
+    "path": "folders/UnityWayDemo/Core/Delegate.yy",
   },
   "resourceVersion": "1.0",
-  "name": "__uw_o_transform_demo_child",
+  "name": "__uw_o_delegate_demo",
   "tags": [],
   "resourceType": "GMObject",
 }

@@ -69,7 +69,7 @@
   ],
   "parent": {
     "name": "Transform",
-    "path": "folders/UnityWayDemo/Transform.yy",
+    "path": "folders/UnityWayDemo/Core/Transform.yy",
   },
   "resourceVersion": "1.0",
   "name": "__uw_spr_transform_demo_parent",

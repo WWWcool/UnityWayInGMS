@@ -1,56 +1,62 @@
 // Unity way library. For more information see the documentation here:
 // https://github.com/WWWcool/UnityWayInGMS/wiki
 
-/// @returns {UWDelegate}
+/// A delegate is a type that represents method references with a specific parameter list. 
+/// When you instantiate a delegate, that instance can be associated with any method with a compatible signature.
+/// The method can be called (activated) using a delegate instance. 
+/// @returns {UWDelegate} created delegate
 
 function UWDelegate() constructor
 {
     list = [];
-	
-    /// @param {function} method_or_function
-    /// @param {instance|struct} [context]
     
-    static Add = function(method_or_function)
+    /// Associate method with this delegate
+    /// @param {script | method} _method_or_function
+    /// @param {instance | struct} _context
+    
+    static Add = function(_method_or_function, _context)
     {
-        array_push(list, ComputeCell(method_or_function, argument_count > 1 ? argument[1] : "non-explicit"));
+        array_push(list, {context: _context, execute: _method_or_function});
     }
     
-    /// @param {function} method_or_function
-    /// @param {instance|struct} [context]
+    /// Dissociate method from this delegate
+    /// @param {script | method} _method_or_function
+    /// @param {instance | struct} _context
     
-    static Remove = function(method_or_function)
+    static Remove = function(_method_or_function, _context)
     {
-        method_or_function = ComputeCell(method_or_function, argument_count > 1 ? argument[1] : "non-explicit");
-        
-        var size = array_length(list), cell;
-        while(size--)
+        for(var i = array_length(list) - 1; i >=0; i--)
         {
-            cell = list[size];
-            if((cell.execute == method_or_function.execute) and (cell.context == method_or_function.context))
+            var data = list[i];
+            if((data.execute == _method_or_function) and (data.context == _context))
             {
-                array_delete(list, size, 1);
+                array_delete(list, i, 1);
                 break;
             }
         }
     }
     
-    /// @param {any} [argCall=undefined]
+    /// Activate all methods associated with this delegate
+    /// @param {any} [_args] args to pass to all methods
     
-    static Run = function(argCall)
+    static Run = function()
     {
         var size = array_length(list);
         if(size)
         {
-            var copy = array_clone(list), cell, execute;
+            var copy = array_clone(list);
             for(var i = 0; i < size; i++)
             {
-                cell = copy[i];
-                execute = cell.execute;
+                var data = copy[i];
                 
-                if(is_string(cell.context))
-					execute(argCall);
+                if(argument_count > 0)
+                {
+                    with (data.context) data.execute(argument[0]);
+                }
                 else
-                    with (cell.context) execute(argCall);
+                {
+                    with (data.context) data.execute();
+                }
             }
         }
     }
@@ -59,31 +65,4 @@ function UWDelegate() constructor
     {
         list = [];
     }
-    
-    /// @param {function} method_or_function
-    /// @param {instance|struct|string} context
-    /// @returns {struct}
-    
-    static ComputeCell = function(method_or_function, context)
-    {
-        if(is_method(method_or_function))
-            method_or_function = method_get_index(method_or_function);
-        
-        if(is_string(context))
-            context = "context-non-explicit";
-        else
-        {
-            if(is_undefined(argument[1]) or (is_real(argument[1]) and object_exists(argument[1])))
-                context = "context-non";
-            else
-                context = argument[1];
-        }
-        
-        return
-        {
-            context: context,
-            execute: method_or_function
-        }
-    }
-    
 }
