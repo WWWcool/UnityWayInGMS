@@ -9,7 +9,6 @@
 
 #macro UW_VECTOR_NAME "UWVector2"
 #macro UW_TRANSFORM_NAME "UWTransform"
-#macro UW_LOOP_NAME "UWLoop"
 
 #macro UW_VECTOR_VERSION -1
 #macro UW_TRANSFORM_VERSION -1
