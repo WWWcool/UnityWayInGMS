@@ -33,7 +33,8 @@ function __uw_prefab_create_factories()
 		
 		if(is_array(_data.tracks))
 		{
-		    var track = _data.tracks[0];
+		    var len = array_length(_data.tracks);
+		    var track = _data.tracks[len - 1];
 		    var _index = asset_get_index(track.name);
             if(_index != -1 && asset_get_type(track.name) == asset_script)
             {
@@ -47,6 +48,14 @@ function __uw_prefab_create_factories()
                     "Add exec script action: " + track.name,
                     _indent
                 );
+                
+                if(len > 1)
+                {
+                	for(var i = len - 2; i >= 0; i--)
+                	{
+                		_context.parse_group_argument(_data.tracks[i].name, _indent, _context);
+                	}
+                }
                 
                 var new_level = track.name == "__uw_prefab_create_transform";
                 if(new_level)
@@ -94,6 +103,17 @@ function __uw_prefab_create_factories()
         			|| track.name == UW_PREFAB_DEFAULT_TRACK_SCALE
         			|| track.name == UW_PREFAB_DEFAULT_TRACK_ROTATION
         			|| track.name == UW_PREFAB_DEFAULT_TRACK_ORIGIN;
+        			
+        		if(track.type == UW_PREFAB_SEQTYPE_GROUP)
+        		{
+        			_context.debug.PrintlnWithIndentIfDefined(
+    					UW_PREFAB_VERBOSE,
+    					"Track: " + track.name + " type: " + _context.map_type(track.type),
+    					_indent
+    				);
+        			_context.parse_group_argument(track.name, _indent, _context);
+        			continue;
+        		}
     			
     			if(default_track)
     			{
@@ -234,6 +254,27 @@ function __uw_prefab_create_factories()
 		return skip_default_tracks;
     }
     
+    var parse_group_argument = function(_track_name, _indent, _context)
+    {
+    	var parts = string_split(_track_name, "/");
+		if(array_length(parts) > 2)
+		{
+			var value_data_type = _context.map_action_data_type(parts[0]);
+			var value_data = new UWPrefabSetValueData(value_data_type, parts[1]);
+			value_data.SetDataFrom(parts[2]);
+			array_push(_context.actions, new UWPrefabAction(
+                UWPrefabActionType.set_value,
+                value_data,
+                _context.current_level
+            ));
+            _context.debug.PrintlnWithIndentIfDefined(
+                UW_PREFAB_VERBOSE,
+                "Add set value action: " + _track_name,
+                _indent
+            );
+		}
+    }
+    
     #endregion
     
     var context =
@@ -254,11 +295,24 @@ function __uw_prefab_create_factories()
             }
             return "unknown_seqtracktype";
         },
+        
+        map_action_data_type : function(_type)
+        {
+            switch(_type){
+                case "bool": return UWPrefabActionValueType.bool;
+                case "real": return UWPrefabActionValueType.real;
+                case "string": return UWPrefabActionValueType.string;
+                case "vector2": return UWPrefabActionValueType.vector2;
+                case "asset_id": return UWPrefabActionValueType.asset_id;
+            }
+            return -1;
+        },
         current_level : 0,
         actions : [],
         extract_actions_from_seq : extract_actions_from_seq,
         extract_actions_from_tracks : extract_actions_from_tracks,
-        extract_actions_from_frames : extract_actions_from_frames
+        extract_actions_from_frames : extract_actions_from_frames,
+        parse_group_argument : parse_group_argument
     }
 
     context.debug.double_indent = true;
@@ -299,7 +353,6 @@ function UWPrefabFactory(_id, _actions) constructor
     actions = _actions;
     uw_objects = array_create(0);
     
-    
     InstanceCreateLayer = function(_x, _y, _layer_id_or_name)
     {
         var debug = new UWUtilsDebug(UW_PREFAB_PREFIX);
@@ -308,6 +361,8 @@ function UWPrefabFactory(_id, _actions) constructor
         var current_level = 0;
         var root_level = 0;
         var inst = noone;
+        var last_created_struct = noone;
+        var need_update_last = false;
         for(var i = 0; i < array_length(actions); i++)
 		{
 		    var action = actions[i];
@@ -315,16 +370,22 @@ function UWPrefabFactory(_id, _actions) constructor
 		    if(action.level < current_level)
 		    {
 		        var obj = array_pop(uw_objects);
+		        need_update_last = true;
 		    }
 		    
 		  //  debug.PrintlnWithIndentIfDefined(UW_PREFAB_VERBOSE, "uw_objects count: " + string(array_length(uw_objects)), action.level);
 		    
 		    var current_obj = array_length(uw_objects) > 0 ? array_get(uw_objects, array_length(uw_objects) - 1) : noone;
 		    
+		    if(need_update_last)
+		    {
+		    	need_update_last = false;
+		    	last_created_struct = current_obj.id != noone ? current_obj.id : current_obj;
+		    }
+		    
 		    switch(action.type)
 		    {
 		        case UWPrefabActionType.create_object:
-		            
 		            if(current_level == 0)
 		            {
 		                inst = instance_create_layer(_x, _y, _layer_id_or_name, action.data);
@@ -352,8 +413,7 @@ function UWPrefabFactory(_id, _actions) constructor
                 			array_push(uw_objects, inst.__uw_obj);
                         }
 		            }
-		            
-		            
+		            last_created_struct = inst;
 		        break;
 		        case UWPrefabActionType.set_sprite:
 		            if(instance_exists(current_obj.transform.instance))
@@ -422,6 +482,13 @@ function UWPrefabFactory(_id, _actions) constructor
 		            {
 		                current_obj.AddComponent(created_struct);
 		            }
+		            last_created_struct = created_struct;
+		        break;
+		        case UWPrefabActionType.set_value:
+		        	if(is_struct(last_created_struct) || instance_exists(last_created_struct))
+		        	{
+		        		action.data.ApplyValueTo(last_created_struct);
+		        	}
 		        break;
 		    }
 		    current_level = action.level;
@@ -439,7 +506,8 @@ enum UWPrefabActionType
     set_scale_value,
     set_rotation_value,
     set_origin_value,
-    exec_script
+    exec_script,
+    set_value
 }
 
 /// Action that can create or change object or component struct.
@@ -453,4 +521,86 @@ function UWPrefabAction(_type, _data, _level) constructor
     type = _type;
     data = _data;
     level = _level;
+}
+
+enum UWPrefabActionValueType 
+{
+    bool,
+    real,
+    string,
+    vector2,
+    asset_id
+}
+
+/// Data to set value of created instance.
+/// @param {UWPrefabActionValueType} _type value type
+/// @param {string} _name value name
+/// @returns {UWPrefabSetValueData} created data
+
+function UWPrefabSetValueData(_type, _name) constructor
+{
+    type = _type;
+    name = _name;
+    value = noone;
+    
+	/// @param {string} _data string to extract data from
+	
+    static SetDataFrom = function(_data)
+    {
+    	switch(type)
+    	{
+    		case UWPrefabActionValueType.bool:
+    			switch(_data)
+    			{
+    				case "true":
+    					value = true;
+    				break;
+    				case "false":
+    					value = false;
+    				break;
+    			}
+    		break;
+    		case UWPrefabActionValueType.real:
+    			value = real(_data);
+    		break;
+    		case UWPrefabActionValueType.string:
+    			value = _data;
+    		break;
+    		case UWPrefabActionValueType.vector2:
+    			_data = string_replace_all(_data, "(", "");
+    			_data = string_replace_all(_data, ")", "");
+    			var parts = string_split(_data, ",");
+        		if(array_length(parts) > 1)
+        		{
+        			value = new UWVector2(real(parts[0]), real(parts[1]));
+        		}
+    		break;
+    		case UWPrefabActionValueType.asset_id:
+    			value = real(_data);
+    		break;
+    	}
+    }
+    
+    /// @param {instance | struct} _instance_or_struct to apply this value to
+    
+    static ApplyValueTo = function(_instance_or_struct)
+    {
+    	if(value == noone)
+    		return;
+    	
+    	if(is_struct(_instance_or_struct))
+		{
+			if(variable_struct_exists(_instance_or_struct, name))
+			{
+				variable_struct_set(_instance_or_struct, name, value);
+			}
+		}
+		else
+		{
+			if(variable_instance_exists(_instance_or_struct, name))
+			{
+				variable_instance_set(_instance_or_struct, name, value);
+			}
+		}
+    }
 }

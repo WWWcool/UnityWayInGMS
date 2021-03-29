@@ -28,6 +28,7 @@
     {"id":{"name":"__uw_utils_debug","path":"scripts/__uw_utils_debug/__uw_utils_debug.yy",},"order":0,},
     {"id":{"name":"__uw_delegate_lib","path":"scripts/__uw_delegate_lib/__uw_delegate_lib.yy",},"order":0,},
     {"id":{"name":"__uw_array_extension","path":"scripts/__uw_array_extension/__uw_array_extension.yy",},"order":3,},
+    {"id":{"name":"__uw_string_extension","path":"scripts/__uw_string_extension/__uw_string_extension.yy",},"order":3,},
   ],
   "Options": [
     {"name":"HTML5","path":"options/html5/options_html5.yy",},

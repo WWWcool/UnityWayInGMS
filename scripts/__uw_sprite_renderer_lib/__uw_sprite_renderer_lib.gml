@@ -54,8 +54,8 @@ function UWSpriteRenderer(_sprite) : UWComponent(UW_SPRITE_RENDERER_TYPE_ID, UW_
                 round(subimg),
                 transform.position.x,
                 transform.position.y,
-                transform.lossy_scale.x,
-                transform.lossy_scale.y,
+                flipX ? -transform.lossy_scale.x : transform.lossy_scale.x,
+                flipY ? -transform.lossy_scale.y : transform.lossy_scale.y,
                 transform.angle,
                 color,
                 alpha
