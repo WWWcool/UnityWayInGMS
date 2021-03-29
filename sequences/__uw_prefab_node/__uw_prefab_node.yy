@@ -58,8 +58,8 @@
   },
   "eventStubScript": null,
   "parent": {
-    "name": "Demo",
-    "path": "folders/UnityWay/PrefabBuilder/Demo.yy",
+    "name": "PrefabBuilder",
+    "path": "folders/UnityWayDemo/PrefabBuilder.yy",
   },
   "resourceVersion": "1.3",
   "name": "__uw_prefab_node",

@@ -46,8 +46,8 @@
     "PhysicsWorldPixToMetres": 0.1,
   },
   "parent": {
-    "name": "Demo",
-    "path": "folders/UnityWay/PrefabBuilder/Demo.yy",
+    "name": "PrefabBuilder",
+    "path": "folders/UnityWayDemo/PrefabBuilder.yy",
   },
   "resourceVersion": "1.0",
   "name": "__uw_rm_prefab_demo",

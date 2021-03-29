@@ -118,7 +118,7 @@ function UWDependencyValidateError(_name, _reason, _indent) constructor
 function __uw_validate_dep_tree()
 {
     gml_pragma("global", "__uw_validate_dep_tree()");
-    
+	
     #region local functions
 	var check_deps = function(_dep_array)
 	{
@@ -137,7 +137,7 @@ function __uw_validate_dep_tree()
 		var failed_deps = _check_func(_deps)
 		if(array_length(failed_deps) != 0)
 		{
-			debug.PrintlnIfDefined(UW_DEPENDENCY_VERBOSE, "Component * " +_cmp_name + " * has not all dependencies defined:");
+			debug.PrintlnIfDefined(UW_DEPENDENCY_VERBOSE, "Component * " + _cmp_name + " * has not all dependencies defined:");
 			for(var i = 0; i < array_length(failed_deps); i++)
 			{
 				debug.PrintlnIfDefined(UW_DEPENDENCY_VERBOSE, failed_deps[i].FormatError());
