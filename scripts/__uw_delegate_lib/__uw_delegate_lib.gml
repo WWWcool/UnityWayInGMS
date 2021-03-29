@@ -6,7 +6,7 @@
 function UWDelegate() constructor
 {
     list = [];
-    
+	
     /// @param {function} method_or_function
     /// @param {instance|struct} [context]
     
@@ -48,7 +48,7 @@ function UWDelegate() constructor
                 execute = cell.execute;
                 
                 if(is_string(cell.context))
-                    with (other) execute(argCall); // to get the context from which the call is made
+					execute(argCall);
                 else
                     with (cell.context) execute(argCall);
             }

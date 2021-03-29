@@ -9,7 +9,7 @@ function array_copy2(dest, dest_index, src, src_index, length)
 {
     var dest_length = array_length(dest);
     var src_length = array_length(src);
-    if((dest_index >= 0) and (src_length >= 0) and (src_index <= src_length - 1) and (length >= 0))
+    if((dest_index >= 0) and (src_length >= 0) and (src_index <= src_length - 1) and (length >= 1))
     {
         array_resize(dest, max(dest_length, dest_index + length));
         if(dest == src)
