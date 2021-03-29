@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "bargare",
-    "path": "folders/bargare.yy",
+    "name": "uw_base",
+    "path": "uw_base.yyp",
   },
   "resourceVersion": "1.0",
-  "name": "__uw_utils_error",
+  "name": "devLoc_miniTester",
   "tags": [],
   "resourceType": "GMScript",
 }

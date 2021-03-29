@@ -1,58 +1,56 @@
 // Unity way library. For more information see the documentation here:
 // https://github.com/WWWcool/UnityWayInGMS/wiki
 
-/// @returns {UWDelegate} it is not delegate, it is execute list
+/// @returns {UWDelegate}
 
 function UWDelegate() constructor
 {
     list = [];
     
     /// @param {function} method_or_function
+    /// @param {instance|struct} [context]
     
     static Add = function(method_or_function)
     {
-        array_push(list, UnwrapMetod(method_or_function));
+        array_push(list, ComputeCell(method_or_function, argument_count > 1 ? argument[1] : "non-explicit"));
     }
+    
+    /// @param {function} method_or_function
+    /// @param {instance|struct} [context]
     
     static Remove = function(method_or_function)
     {
-        method_or_function = UnwrapMetod(method_or_function);
+        method_or_function = ComputeCell(method_or_function, argument_count > 1 ? argument[1] : "non-explicit");
         
-        var _size = array_length(list), _cell;
-        while(_size--)
+        var size = array_length(list), cell;
+        while(size--)
         {
-            _cell = list[_size];
-            if((_cell.execute == method_or_function.execute) and (_cell.context == method_or_function.context))
+            cell = list[size];
+            if((cell.execute == method_or_function.execute) and (cell.context == method_or_function.context))
             {
-                array_delete(list, _size, 1);
+                array_delete(list, size, 1);
                 break;
             }
         }
     }
     
+    /// @param {any} [argCall=undefined]
+    
     static Run = function(argCall)
     {
-        var _size = array_length(list);
-        if(_size)
+        var size = array_length(list);
+        if(size)
         {
-            var _copy = array_create(_size);
-            for(var _i = 0; _i < _size; _i++)
-                _copy[_i] = list[_i];
-            
-            var _cell, _execute;
-            for(_i = 0; _i < _size; _i++)
+            var copy = array_clone(list), cell, execute;
+            for(var i = 0; i < size; i++)
             {
-                _cell = _copy[_i];
-                _execute = _cell.execute;
+                cell = copy[i];
+                execute = cell.execute;
                 
-                if(is_undefined(_cell.context))
-                {
-                    with (other) _execute(argCall);
-                }
+                if(is_string(cell.context))
+                    with (other) execute(argCall); // to get the context from which the call is made
                 else
-                {
-                    with (_cell.context) _execute(argCall);
-                }
+                    with (cell.context) execute(argCall);
             }
         }
     }
@@ -62,21 +60,28 @@ function UWDelegate() constructor
         list = [];
     }
     
+    /// @param {function} method_or_function
+    /// @param {instance|struct|string} context
     /// @returns {struct}
     
-    static UnwrapMetod = function(method_or_function)
+    static ComputeCell = function(method_or_function, context)
     {
         if(is_method(method_or_function))
+            method_or_function = method_get_index(method_or_function);
+        
+        if(is_string(context))
+            context = "context-non-explicit";
+        else
         {
-            return
-            {
-                context: method_get_self(method_or_function),
-                execute: method_get_index(method_or_function)
-            }
+            if(is_undefined(argument[1]) or (is_real(argument[1]) and object_exists(argument[1])))
+                context = "context-non";
+            else
+                context = argument[1];
         }
+        
         return
         {
-            context: undefined,
+            context: context,
             execute: method_or_function
         }
     }
