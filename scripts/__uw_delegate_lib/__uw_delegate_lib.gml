@@ -16,13 +16,14 @@ function UWDelegate() constructor
     
     static Add = function(_method_or_function, _context)
     {
-        var cell =
-        {
-            ref: _method_or_function,
-            context: _context,
-            execute: method(_context, _method_or_function),
-        }
-        array_push(list, cell);
+        array_push(
+            list,
+            {
+                ref: _method_or_function,
+                context: _context,
+                execute: method(_context, _method_or_function),
+            }
+        );
     }
     
     /// Dissociate method from this delegate
@@ -51,13 +52,16 @@ function UWDelegate() constructor
         if(size)
         {
             var copy = array_clone(list);
-            for(var i = 0; i < size; i++)
+            if(argument_count > 0)
             {
-                if(argument_count > 0)
+                for(var i = 0; i < size; i++)
                 {
                     copy[i].execute(argument[0]);
                 }
-                else
+            }
+            else
+            {
+                for(var i = 0; i < size; i++)
                 {
                     copy[i].execute();
                 }

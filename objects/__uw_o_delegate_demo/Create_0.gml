@@ -12,17 +12,12 @@ var test_method = function(){show_debug_message(name);};
 object.delegate.Add(function(){show_debug_message(name);}, id);
 object.delegate.Run(); // Self
 
-//
+// struct-context -> call context
 var test = {name : "Test"};
 object.delegate.Add(function(){show_debug_message(name);}, test);
 object.delegate.Run(); // Self Test
 
-with(test)
-{
-	test_method(); // Self
-}
-
-// + context
+// clear and struct-context -> call context
 object.delegate.Clear();
 object.delegate.Add(function(){show_debug_message(name);}, object);
 object.delegate.Run(); // Object
@@ -31,11 +26,11 @@ object.delegate.Run(); // Object
 Self
 Self
 Test
-Self
 Object
 */
 
 show_debug_message("--");
+
 object.delegate.Clear();
 object.delegate.Add(test_method, test);
 object.delegate.Add(test_method, test);
