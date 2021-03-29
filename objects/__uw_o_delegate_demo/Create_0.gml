@@ -19,13 +19,28 @@ object.delegate.Run(); // Self Test
 
 with(test)
 {
-	test_method();	
+	test_method(); // Self
 }
-
-//object.delegate.Remove(test_method, id);
-//object.delegate.Run(); // Test
 
 // + context
 object.delegate.Clear();
 object.delegate.Add(function(){show_debug_message(name);}, object);
 object.delegate.Run(); // Object
+
+/* Correct console result
+Self
+Self
+Test
+Self
+Object
+*/
+
+show_debug_message("--");
+object.delegate.Clear();
+object.delegate.Add(test_method, test);
+object.delegate.Add(test_method, test);
+object.delegate.Add(test_method, id);
+object.delegate.Remove(test_method, test); // delete last
+object.delegate.Remove(test_method, id);
+
+object.delegate.Run(); // Test
