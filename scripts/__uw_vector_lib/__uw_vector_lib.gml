@@ -165,7 +165,7 @@ function UWVector2(_x, _y) constructor
     /// @param {number} _new_x
     /// @param {number} _new_y
     
-    Set = function(_new_x, _new_y)
+    static Set = function(_new_x, _new_y)
     {
         x = _new_x;
         y = _new_y;
@@ -175,7 +175,7 @@ function UWVector2(_x, _y) constructor
     ///
     /// @param {UWVector2} _scale
     
-    Scale = function(_scale)
+    static Scale = function(_scale)
     {
         x *= _scale.x;
         y *= _scale.y;
@@ -184,30 +184,30 @@ function UWVector2(_x, _y) constructor
     /// Returns the length of this vector (Read Only).
     /// @returns {number} magnitude
     
-    Magnitude = function(){ return sqrt(x * x + y * y);}
+    static Magnitude = function(){ return sqrt(x * x + y * y);}
     
     /// Returns the squared length of this vector (Read Only).
     /// @returns {number} sqr magnitude
     
-    SqrMagnitude = function(){ return x * x + y * y;}
+    static SqrMagnitude = function(){ return x * x + y * y;}
     
     /// @returns {UWVector2} vector2
     
-    Add = function(_vector)
+    static Add = function(_vector)
     {
         return new UWVector2(x + _vector.x, y + _vector.y);
     }
     
     /// @returns {UWVector2} vector2
     
-    Sub = function(_vector)
+    static Sub = function(_vector)
     {
         return new UWVector2(x - _vector.x, y - _vector.y);
     }
     
     /// @returns {UWVector2} vector2
     
-    Mult = function(_vector_or_number)
+    static Mult = function(_vector_or_number)
     {
         return new UWVector2(
             is_numeric(_vector_or_number) ? x * _vector_or_number : x * _vector_or_number.x,
@@ -216,7 +216,7 @@ function UWVector2(_x, _y) constructor
     
     /// @returns {UWVector2} vector2
     
-    Div = function(_vector_or_number)
+    static Div = function(_vector_or_number)
     {
         return new UWVector2(
             is_numeric(_vector_or_number) ? x / _vector_or_number : x / _vector_or_number.x,
@@ -225,14 +225,14 @@ function UWVector2(_x, _y) constructor
     
     /// @returns {UWVector2} vector2
     
-    Inv = function()
+    static Inv = function()
     {
         return new UWVector2(-x, -y);
     }
     
     /// @returns {bool} is equals
     
-    Equals = function(_vector)
+    static Equals = function(_vector)
     {
         var num1 = x - _vector.x;
         var num2 = y - _vector.y;
@@ -241,7 +241,7 @@ function UWVector2(_x, _y) constructor
     
     /// @returns {string} formatted output
     
-    ToString = function()
+    static ToString = function()
     {
         return "(" + string(x) + ", " + string(y) + ")";
     }

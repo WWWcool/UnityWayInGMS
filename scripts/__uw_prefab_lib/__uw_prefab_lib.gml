@@ -353,7 +353,7 @@ function UWPrefabFactory(_id, _actions) constructor
     actions = _actions;
     uw_objects = array_create(0);
     
-    InstanceCreateLayer = function(_x, _y, _layer_id_or_name)
+    static InstanceCreateLayer = function(_x, _y, _layer_id_or_name)
     {
         var debug = new UWUtilsDebug(UW_PREFAB_PREFIX);
         debug.PrintlnIfDefined(UW_PREFAB_VERBOSE, "InstanceCreateLayer for prefab: " + id);

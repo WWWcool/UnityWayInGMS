@@ -21,7 +21,7 @@ function UWSpriteRenderer(_sprite) : UWComponent(UW_SPRITE_RENDERER_TYPE_ID, UW_
     flipX = false;
     flipY = false;
     
-    draw = function()
+    static draw = function()
     {
         DrawSprite();
     }
@@ -29,19 +29,19 @@ function UWSpriteRenderer(_sprite) : UWComponent(UW_SPRITE_RENDERER_TYPE_ID, UW_
     /// Get info string specific for this component
     /// @returns {string} info
     
-    GetInfo = function()
+    static GetInfo = function()
     {
         return "sprite: " + string(sprite);
     }
     
-    SetSprite = function(_sprite)
+    static SetSprite = function(_sprite)
     {
         sprite = _sprite;
         subimg_count = sprite_get_number(_sprite);
         size = new UWVector2(sprite_get_width(_sprite), sprite_get_height(_sprite));
     }
     
-    DrawSprite = function()
+    static DrawSprite = function()
     {
         if(!sprite_exists(sprite))
             return;
@@ -72,7 +72,7 @@ function UWSpriteRenderer(_sprite) : UWComponent(UW_SPRITE_RENDERER_TYPE_ID, UW_
         }
     }
     
-    IncrementImageIndex = function(_amount)
+    static IncrementImageIndex = function(_amount)
     {
         subimg = clamp(subimg + _amount, 0, subimg_count);
     }

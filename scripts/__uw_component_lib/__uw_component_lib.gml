@@ -41,7 +41,7 @@ function UWObject() constructor
     /// Print all components and childs of object
     /// @param {number} _indent
     
-    ShowHierarchy = function(_indent)
+    static ShowHierarchy = function(_indent)
     {
         var debug = new UWUtilsDebug("");
         var context =
@@ -95,7 +95,7 @@ function UWObject() constructor
     
     /// Link uw object to game object
     
-    LinkToInstance = function(_inst)
+    static LinkToInstance = function(_inst)
     {
         if(instance_exists(_inst))
         {
@@ -109,7 +109,7 @@ function UWObject() constructor
     
     /// Clear all components in object
     
-    Clear = function()
+    static Clear = function()
     {
         components = {};
         components_names = [];
@@ -121,7 +121,7 @@ function UWObject() constructor
     /// @param {UWComponent} _cmp component to add
     /// @returns {bool} result
     
-    AddComponent = function(_cmp)
+    static AddComponent = function(_cmp)
     {
         if(!is_struct(_cmp))
             return false;
@@ -157,7 +157,7 @@ function UWObject() constructor
     /// @param {UWComponent} _cmp component to remove
     /// @returns {bool} result
     
-    RemoveComponent = function(_cmp)
+    static RemoveComponent = function(_cmp)
     {
         if(!is_struct(_cmp))
             return false;
@@ -173,7 +173,7 @@ function UWObject() constructor
     /// @param {number} _type_id component type id
     /// @returns {UWComponent} found component
     
-    GetComponentByTypeID = function(_type_id)
+    static GetComponentByTypeID = function(_type_id)
     {
         return components[$ _type_id] == undefined ? noone : components[$ _type_id];
     }
@@ -181,7 +181,7 @@ function UWObject() constructor
     /// @param {string} _name component name
     /// @returns {UWComponent} found component
     
-    GetComponentByName = function(_name)
+    static GetComponentByName = function(_name)
     {
         return FindComponent(
             function(_cmp, _name)
@@ -194,7 +194,7 @@ function UWObject() constructor
     
     /// Trigger this function to emit create event for all components already added to object
     
-    CreateFinished = function()
+    static CreateFinished = function()
     {
         ExecuteGroup(UW_COMPONENT_GROUP_CREATE);
     }
@@ -204,7 +204,7 @@ function UWObject() constructor
     /// @param {script} _check_func function that check if component suitable for group
     /// @param {script} _exec_func function that do some work for group
     
-    AddGroup = function(_type, _check_func, _exec_func)
+    static AddGroup = function(_type, _check_func, _exec_func)
     {
         if(groups[$ _type] != undefined)
             return false;
@@ -224,7 +224,7 @@ function UWObject() constructor
     
     /// @param {UWComponent} _cmp component to add
     
-    TryToAddToGroups = function(_cmp)
+    static TryToAddToGroups = function(_cmp)
     {
         for(var i = 0; i < array_length(groups_names); i++)
         {
@@ -234,7 +234,7 @@ function UWObject() constructor
     
     /// @param {UWComponent} _cmp component to remove
     
-    RemoveFromGroups = function(_cmp)
+    static RemoveFromGroups = function(_cmp)
     {
         for(var i = 0; i < array_length(groups_names); i++)
         {
@@ -246,7 +246,7 @@ function UWObject() constructor
     /// @param {string} _type index in object groups
     /// @param {array} [_args] some args passed to exec function
     
-    ExecuteGroup = function(_type)
+    static ExecuteGroup = function(_type)
     {
         if(groups[$ _type] == undefined)
             return;
@@ -272,7 +272,7 @@ function UWObject() constructor
     /// @param _map_func
     /// @param _arg some args passed to function
     
-    MapComponents = function(_map_func)
+    static MapComponents = function(_map_func)
     {
         if(argument_count > 1)
         {
@@ -295,7 +295,7 @@ function UWObject() constructor
     /// @param _arg some args passed to function
     /// @returns {UWComponent} found component
     
-    FindComponent = function(_find_func)
+    static FindComponent = function(_find_func)
     {
         if(argument_count > 1)
         {
@@ -338,7 +338,7 @@ function UWComponent(_type_id, _name) constructor
     /// Get info string specific for this component
     /// @returns {string} info
     
-    GetInfo = function()
+    static GetInfo = function()
     {
         return "";
     }
@@ -346,7 +346,7 @@ function UWComponent(_type_id, _name) constructor
     /// Throw error if function is not implemented
     /// @param {string} _func_name name of not implemented function
     
-    throwNotImplemented = function(_func_name)
+    static throwNotImplemented = function(_func_name)
     {
         show_error(
             "Function - " + _func_name + 
@@ -372,7 +372,7 @@ function UWComponentGroup(_type, _check_func, _exec_func) constructor
     /// Add component to group if it pass check
     /// @param {UWComponent} _cmp
     
-    TryAddComponent = function(_cmp)
+    static TryAddComponent = function(_cmp)
     {
         if(check_func(_cmp))
         {
@@ -383,7 +383,7 @@ function UWComponentGroup(_type, _check_func, _exec_func) constructor
     /// Remove component from group
     /// @param {UWComponent} _cmp
     
-    RemoveComponent = function(_cmp)
+    static RemoveComponent = function(_cmp)
     {
         for(var i = 0; i < array_length(components); i++)
         {
@@ -398,7 +398,7 @@ function UWComponentGroup(_type, _check_func, _exec_func) constructor
     /// Execute all component in group
     /// @param {array} [_args] some args passed to exec function
     
-    Execute = function()
+    static Execute = function()
     {
         if(argument_count > 0)
         {

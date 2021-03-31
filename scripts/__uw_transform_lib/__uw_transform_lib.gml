@@ -20,7 +20,7 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
     local_scale = new UWVector2(1, 1);
     parent = noone;
     childs = [];
-    childCount = function(){return array_length(childs)};
+    static childCount = function(){return array_length(childs)};
     instance = noone;
     
 	/***
@@ -30,7 +30,7 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
 	/// Get info string specific for this component
     /// @returns {string} info
     
-    GetInfo = function()
+    static GetInfo = function()
     {
         return "position: " + position.ToString() + 
         " angle: " + string(angle) + 
@@ -42,7 +42,7 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
     /// @param {object} _obj
     /// @param {bool} [_object_position_stays]
     
-    SetInstance = function(_obj)
+    static SetInstance = function(_obj)
     {
         if(!instance_exists(_obj))
             return;
@@ -71,14 +71,11 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
         else
         {
             instance = _obj;
-            with(instance)
-            {
-                x = other.position.x;
-                y = other.position.y;
-                image_xscale = other.lossy_scale.x;
-                image_yscale = other.lossy_scale.y;
-                image_angle = other.angle;
-            }
+            instance.y = position.y;
+            instance.x = position.x;
+            instance.image_xscale = lossy_scale.x;
+            instance.image_yscale = lossy_scale.y;
+            instance.image_angle = angle;
         }
     }
 	
@@ -87,39 +84,9 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
     /// @param {UWTransform} _transform
     /// @param {bool} [_world_position_stays]
     
-    SetParent = function(_transform)
+    static SetParent = function(_transform)
     {
         var _world_position_stays = argument_count > 1 ? argument[1] : true;
-        if(_transform != noone)
-        {
-            if(_world_position_stays)
-            {
-                local_position = _transform.InverseTransformVector(position);
-                local_angle = _transform.InverseTransformDirection(angle);
-                local_scale = _transform.InverseTransformScale(lossy_scale);
-            }
-            else
-            {
-                SetPositionAndAngleAndScale(
-                    _transform.TransformVector(local_position),
-                    _transform.TransformDirection(local_angle),
-                    _transform.TransformScale(local_scale)
-                );
-            }
-        }
-        else
-        {
-            if(_world_position_stays)
-            {
-                local_position = position;
-                local_angle = angle;
-                local_scale = lossy_scale;
-            }
-            else
-            {
-                SetPositionAndAngleAndScale(local_position, local_angle, local_scale);
-            }
-        }
         
         if(parent != noone)
         {
@@ -139,6 +106,33 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
         {
             array_push(parent.childs, self);
         }
+        
+        if(parent != noone)
+        {
+            if(_world_position_stays)
+            {
+                local_position = parent.InverseTransformVector(position);
+                local_angle = parent.InverseTransformDirection(angle);
+                local_scale = parent.InverseTransformScale(lossy_scale);
+            }
+            else
+            {
+                SetLocalPositionAndAngleAndScale(local_position, local_angle, local_scale);
+            }
+        }
+        else
+        {
+            if(_world_position_stays)
+            {
+                local_position = position;
+                local_angle = angle;
+                local_scale = lossy_scale;
+            }
+            else
+            {
+                SetPositionAndAngleAndScale(local_position, local_angle, local_scale);
+            }
+        }
     }
     
     /// Sets the world space position, angle and scale of the Transform component.
@@ -147,26 +141,42 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
     /// @param {number} _angle
     /// @param {UWVector2} _scale
     
-    SetPositionAndAngleAndScale = function(_position, _angle, _scale)
+    static SetPositionAndAngleAndScale = function(_position, _angle, _scale)
     {
         position = _position;
         angle = _angle;
         lossy_scale = _scale;
         
+        if(parent != noone)
+        {
+            local_position = parent.InverseTransformVector(position);
+            local_angle = parent.InverseTransformDirection(angle);
+            local_scale = parent.InverseTransformScale(lossy_scale);
+        }
+        else
+        {
+            local_position = position;
+            local_angle = angle;
+            local_scale = lossy_scale;
+        }
+        
         if(instance_exists(instance))
         {
-            with(instance)
-            {
-                x = other.position.x;
-                y = other.position.y;
-                image_xscale = other.lossy_scale.x;
-                image_yscale = other.lossy_scale.y;
-                image_angle = other.angle;
-            }
+            instance.x = position.x;
+            instance.y = position.y;
+            instance.image_xscale = lossy_scale.x;
+            instance.image_yscale = lossy_scale.y;
+            instance.image_angle = angle;
         }
         
         ForeachChild(function(_child)
         {
+            // _child.SetLocalPositionAndAngleAndScale
+            // (
+            //     _child.local_position,
+            //     _child.local_angle,
+            //     _child.local_scale
+            // );
             _child.SetPositionAndAngleAndScale
             (
                 TransformVector(_child.local_position),
@@ -182,7 +192,7 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
     /// @param {number} _angle
     /// @param {UWVector2} _scale
     
-    SetLocalPositionAndAngleAndScale = function(_position, _angle, _scale)
+    static SetLocalPositionAndAngleAndScale = function(_position, _angle, _scale)
     {
         local_position = _position;
         local_angle = _angle;
@@ -203,23 +213,20 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
         
         if(instance_exists(instance))
         {
-            with(instance)
-            {
-                x = other.position.x;
-                y = other.position.y;
-                image_xscale = other.lossy_scale.x;
-                image_yscale = other.lossy_scale.y;
-                image_angle = other.angle;
-            }
+            instance.x = position.x;
+            instance.y = position.y;
+            instance.image_xscale = lossy_scale.x;
+            instance.image_yscale = lossy_scale.y;
+            instance.image_angle = angle;
         }
         
         ForeachChild(function(_child)
         {
-            _child.SetPositionAndAngleAndScale
+            _child.SetLocalPositionAndAngleAndScale
             (
-                TransformVector(_child.local_position),
-                TransformDirection(_child.local_angle),
-                TransformScale(_child.local_scale)
+                _child.local_position,
+                _child.local_angle,
+                _child.local_scale
             );
         });
     }
@@ -229,7 +236,7 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
     /// @param {UWVector2} _translation
     /// @param {UWTransform} _relativeTo
     
-    Translate = function(_translation, _relativeTo)
+    static Translate = function(_translation, _relativeTo)
     {
         throwNotImplemented("Translate");
     }
@@ -239,7 +246,7 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
     /// @param {UWVector2} _angle
     /// @param {UWTransform} _relativeTo
     
-    Rotate = function(_angle, _relativeTo)
+    static Rotate = function(_angle, _relativeTo)
     {
         throwNotImplemented("Rotate");
     }
@@ -248,7 +255,7 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
     ///
     /// @param {UWTransform} _target
     
-    LookAt = function(_target)
+    static LookAt = function(_target)
     {
         throwNotImplemented("LookAt");
     }
@@ -258,7 +265,7 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
     /// @param {number} _direction
     /// @returns {number} world space direction
     
-    TransformDirection = function(_direction)
+    static TransformDirection = function(_direction)
     {
         return _direction + angle;
     }
@@ -268,7 +275,7 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
     /// @param {number} _direction
     /// @returns {number} local space direction
     
-    InverseTransformDirection = function(_direction)
+    static InverseTransformDirection = function(_direction)
     {
         return _direction - angle;
     }
@@ -278,7 +285,7 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
     /// @param {UWVector2} _scale
     /// @returns {UWVector2} world space scale
     
-    TransformScale = function(_scale)
+    static TransformScale = function(_scale)
     {
         return _scale.Mult(lossy_scale);
     }
@@ -288,7 +295,7 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
     /// @param {UWVector2} _scale
     /// @returns {UWVector2} local space scale
     
-    InverseTransformScale = function(_scale)
+    static InverseTransformScale = function(_scale)
     {
         return _scale.Div(lossy_scale);
     }
@@ -298,15 +305,15 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
     /// @param {UWVector2} _vector
     /// @returns {UWVector2} world space vector
     
-    TransformVector = function(_vector)
+    static TransformVector = function(_vector)
     {
-        var world_x = lossy_scale.x * (
-            _vector.x * dcos(-angle) -
-            _vector.y * dsin(-angle)
+        var world_x =  (
+            lossy_scale.x * _vector.x * dcos(-angle) -
+            lossy_scale.y * _vector.y * dsin(-angle)
         ) + position.x;
-        var world_y = lossy_scale.y * (
-            _vector.x * dsin(-angle) +
-            _vector.y * dcos(-angle)
+        var world_y =  (
+            lossy_scale.x * _vector.x * dsin(-angle) +
+            lossy_scale.y * _vector.y * dcos(-angle)
         ) + position.y;
         
         return new UWVector2(world_x, world_y);
@@ -317,16 +324,16 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
     /// @param {UWVector2} _vector
     /// @returns {UWVector2} local space vector
     
-    InverseTransformVector = function(_vector)
+    static InverseTransformVector = function(_vector)
     {
-        _vector.Sub(position);
+        var vector = _vector.Sub(position);
         var local_x = (
-            _vector.x * dcos(angle) -
-            _vector.y * dsin(angle)
+            vector.x * dcos(angle) -
+            vector.y * dsin(angle)
         ) / lossy_scale.x;
         var local_y = (
-            _vector.x * dsin(angle) +
-            _vector.y * dcos(angle)
+            vector.x * dsin(angle) +
+            vector.y * dcos(angle)
         ) / lossy_scale.y;
         
         return new UWVector2(local_x, local_y);
@@ -335,14 +342,14 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
     /// Returns the topmost transform in the hierarchy.
     /// @returns {UWTransform} root transform
     
-    GetRoot = function()
+    static GetRoot = function()
     {
         return parent == noone ? self : parent.GetRoot();
     }
     
     /// Unparents all children.
     
-    DetachChildren = function()
+    static DetachChildren = function()
     {
         ForeachChild(function(_child){_child.SetParent(noone);});
         childs = [];
@@ -353,7 +360,7 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
     /// @param {UWTransform} _transform
     /// @returns {bool} is child of passed transform
     
-    IsChildOf = function(_transform)
+    static IsChildOf = function(_transform)
     {
         if(parent != noone)
         {
@@ -374,7 +381,7 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
     /// @param {number} _index Integer - Index of the child transform to return. Must be smaller than UWTransform.childCount.
     /// @returns {UWTransform} child transform
     
-    GetChild = function(_index)
+    static GetChild = function(_index)
     {
         if(_index < childCount())
         {
@@ -383,7 +390,7 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
         return noone;
     }
     
-    ForeachChild = function(_func)
+    static ForeachChild = function(_func)
     {
         if(argument_count > 1)
         {
