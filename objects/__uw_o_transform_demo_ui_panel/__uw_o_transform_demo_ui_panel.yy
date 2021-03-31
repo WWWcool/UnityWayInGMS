@@ -1,7 +1,7 @@
 {
   "spriteId": {
-    "name": "__uw_spr_transform_demo_parent",
-    "path": "sprites/__uw_spr_transform_demo_parent/__uw_spr_transform_demo_parent.yy",
+    "name": "__uw_spr_transform_demo_ui_panel",
+    "path": "sprites/__uw_spr_transform_demo_ui_panel/__uw_spr_transform_demo_ui_panel.yy",
   },
   "solid": false,
   "visible": true,
@@ -25,18 +25,17 @@
   "physicsShapePoints": [],
   "eventList": [
     {"isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
-    {"isDnD":false,"eventNum":37,"eventType":9,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
-    {"isDnD":false,"eventNum":39,"eventType":9,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
+    {"isDnD":false,"eventNum":0,"eventType":8,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
     {"isDnD":false,"eventNum":0,"eventType":3,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
   ],
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "TechnicalDemo",
-    "path": "folders/UnityWayDemo/Core/Transform/TechnicalDemo.yy",
+    "name": "UIDemo",
+    "path": "folders/UnityWayDemo/Core/Transform/UIDemo.yy",
   },
   "resourceVersion": "1.0",
-  "name": "__uw_o_transform_demo_parent",
+  "name": "__uw_o_transform_demo_ui_panel",
   "tags": [],
   "resourceType": "GMObject",
 }

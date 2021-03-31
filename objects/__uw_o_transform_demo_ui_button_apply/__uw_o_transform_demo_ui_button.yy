@@ -1,16 +1,10 @@
 {
-  "spriteId": {
-    "name": "__uw_spr_transform_demo_child",
-    "path": "sprites/__uw_spr_transform_demo_child/__uw_spr_transform_demo_child.yy",
-  },
+  "spriteId": null,
   "solid": false,
   "visible": true,
   "spriteMaskId": null,
   "persistent": false,
-  "parentObjectId": {
-    "name": "__uw_object",
-    "path": "objects/__uw_object/__uw_object.yy",
-  },
+  "parentObjectId": null,
   "physicsObject": false,
   "physicsSensor": false,
   "physicsShape": 1,
@@ -27,11 +21,11 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "TechnicalDemo",
-    "path": "folders/UnityWayDemo/Core/Transform/TechnicalDemo.yy",
+    "name": "UIDemo",
+    "path": "folders/UnityWayDemo/Core/Transform/UIDemo.yy",
   },
   "resourceVersion": "1.0",
-  "name": "__uw_o_transform_demo_child",
+  "name": "__uw_o_transform_demo_ui_button",
   "tags": [],
   "resourceType": "GMObject",
 }

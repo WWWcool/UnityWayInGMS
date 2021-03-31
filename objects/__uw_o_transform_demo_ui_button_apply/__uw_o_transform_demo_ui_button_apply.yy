@@ -1,15 +1,15 @@
 {
   "spriteId": {
-    "name": "__uw_spr_transform_demo_child",
-    "path": "sprites/__uw_spr_transform_demo_child/__uw_spr_transform_demo_child.yy",
+    "name": "__uw_spr_transform_demo_ui_button_apply",
+    "path": "sprites/__uw_spr_transform_demo_ui_button_apply/__uw_spr_transform_demo_ui_button_apply.yy",
   },
   "solid": false,
   "visible": true,
   "spriteMaskId": null,
   "persistent": false,
   "parentObjectId": {
-    "name": "__uw_object",
-    "path": "objects/__uw_object/__uw_object.yy",
+    "name": "__uw_o_transform_demo_ui_button",
+    "path": "objects/__uw_o_transform_demo_ui_button/__uw_o_transform_demo_ui_button.yy",
   },
   "physicsObject": false,
   "physicsSensor": false,
@@ -27,11 +27,11 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "TechnicalDemo",
-    "path": "folders/UnityWayDemo/Core/Transform/TechnicalDemo.yy",
+    "name": "UIDemo",
+    "path": "folders/UnityWayDemo/Core/Transform/UIDemo.yy",
   },
   "resourceVersion": "1.0",
-  "name": "__uw_o_transform_demo_child",
+  "name": "__uw_o_transform_demo_ui_button_apply",
   "tags": [],
   "resourceType": "GMObject",
 }

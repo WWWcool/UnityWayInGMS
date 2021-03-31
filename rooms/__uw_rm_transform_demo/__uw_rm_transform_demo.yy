@@ -50,8 +50,8 @@
     "PhysicsWorldPixToMetres": 0.1,
   },
   "parent": {
-    "name": "Transform",
-    "path": "folders/UnityWayDemo/Core/Transform.yy",
+    "name": "TechnicalDemo",
+    "path": "folders/UnityWayDemo/Core/Transform/TechnicalDemo.yy",
   },
   "resourceVersion": "1.0",
   "name": "__uw_rm_transform_demo",

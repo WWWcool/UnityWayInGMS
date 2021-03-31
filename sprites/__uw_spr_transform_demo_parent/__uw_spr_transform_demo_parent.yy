@@ -67,9 +67,10 @@
   "layers": [
     {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"b673cfc1-7ed6-4511-aef5-62bc47ab0a4c","tags":[],"resourceType":"GMImageLayer",},
   ],
+  "nineSlice": null,
   "parent": {
-    "name": "Transform",
-    "path": "folders/UnityWayDemo/Core/Transform.yy",
+    "name": "TechnicalDemo",
+    "path": "folders/UnityWayDemo/Core/Transform/TechnicalDemo.yy",
   },
   "resourceVersion": "1.0",
   "name": "__uw_spr_transform_demo_parent",
