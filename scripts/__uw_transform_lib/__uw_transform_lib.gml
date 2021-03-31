@@ -2,8 +2,8 @@
 // https://github.com/WWWcool/UnityWayInGMS/wiki
 
 #macro UW_TRANSFORM_TYPE_ID 10001
-#macro UW_TRANSFORM_DEFINED true
-#macro UW_TRANSFORM_VERSION 1
+//#macro UW_TRANSFORM_DEFINED true
+//#macro UW_TRANSFORM_VERSION 1
 
 /// Position, rotation and scale of an object.
 /// @param {UWTransform} [_parent]
@@ -171,17 +171,11 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
         
         ForeachChild(function(_child)
         {
-            // _child.SetLocalPositionAndAngleAndScale
-            // (
-            //     _child.local_position,
-            //     _child.local_angle,
-            //     _child.local_scale
-            // );
-            _child.SetPositionAndAngleAndScale
+            _child.SetLocalPositionAndAngleAndScale
             (
-                TransformVector(_child.local_position),
-                TransformDirection(_child.local_angle),
-                TransformScale(_child.local_scale)
+                _child.local_position,
+                _child.local_angle,
+                _child.local_scale
             );
         });
     }

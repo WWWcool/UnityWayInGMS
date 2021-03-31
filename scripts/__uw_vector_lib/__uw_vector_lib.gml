@@ -1,8 +1,8 @@
 // Unity way library. For more information see the documentation here:
 // https://github.com/WWWcool/UnityWayInGMS/wiki
 
-#macro UW_VECTOR_DEFINED true
-#macro UW_VECTOR_VERSION 1
+//#macro UW_VECTOR_DEFINED true
+//#macro UW_VECTOR_VERSION 1
 
 /// Representation of 2D vectors and points.
 /// TODO: need unit test for this
