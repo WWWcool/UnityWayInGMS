@@ -4,4 +4,11 @@
 // Inherit the parent event
 event_inherited();
 draw_set_color(title_color);
-draw_text(x + 150, y + 40, "Press to move it!");
+draw_text_transformed(
+	x + 140 * image_xscale,
+	y + 40 * image_yscale,
+	"Press to move it!",
+	image_xscale,
+	image_yscale,
+	image_angle
+);

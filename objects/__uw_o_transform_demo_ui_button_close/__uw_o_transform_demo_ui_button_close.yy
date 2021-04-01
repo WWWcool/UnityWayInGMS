@@ -1,15 +1,15 @@
 {
   "spriteId": {
-    "name": "__uw_spr_transform_demo_ui_panel",
-    "path": "sprites/__uw_spr_transform_demo_ui_panel/__uw_spr_transform_demo_ui_panel.yy",
+    "name": "__uw_spr_transform_demo_ui_close",
+    "path": "sprites/__uw_spr_transform_demo_ui_close/__uw_spr_transform_demo_ui_close.yy",
   },
   "solid": false,
   "visible": true,
   "spriteMaskId": null,
   "persistent": false,
   "parentObjectId": {
-    "name": "__uw_object",
-    "path": "objects/__uw_object/__uw_object.yy",
+    "name": "__uw_o_transform_demo_ui_button",
+    "path": "objects/__uw_o_transform_demo_ui_button/__uw_o_transform_demo_ui_button.yy",
   },
   "physicsObject": false,
   "physicsSensor": false,
@@ -25,9 +25,12 @@
   "physicsShapePoints": [],
   "eventList": [
     {"isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
+    {"isDnD":false,"eventNum":4,"eventType":6,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
+    {"isDnD":false,"eventNum":7,"eventType":6,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
+    {"isDnD":false,"eventNum":10,"eventType":6,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
+    {"isDnD":false,"eventNum":11,"eventType":6,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
     {"isDnD":false,"eventNum":0,"eventType":8,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
     {"isDnD":false,"eventNum":0,"eventType":3,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
-    {"isDnD":false,"eventNum":82,"eventType":9,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
   ],
   "properties": [],
   "overriddenProperties": [],
@@ -36,7 +39,7 @@
     "path": "folders/UnityWayDemo/Core/Transform/UIDemo.yy",
   },
   "resourceVersion": "1.0",
-  "name": "__uw_o_transform_demo_ui_panel",
+  "name": "__uw_o_transform_demo_ui_button_close",
   "tags": [],
   "resourceType": "GMObject",
 }

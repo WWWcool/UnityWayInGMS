@@ -21,6 +21,22 @@ inst = __uw_instance_create_layer(shift_x, shift_y + 165, "Buttons", __uw_o_tran
 inst.text = "Gray";
 inst.color = make_color_rgb(86, 86, 86);
 
+inst = __uw_instance_create_layer(250, 40, "Buttons", __uw_o_transform_demo_ui_button_close, id);
+inst.close_action = method(id, function(){need_disappear = true;});
+
 mouse_start_pos = {};
 start_pos = {};
 title_color = make_color_rgb(232, 226, 179);
+need_appear = true;
+need_disappear = false;
+anim_pos = 0;
+anim_speed = 0.015;
+
+target_pos = new UWVector2(x, y);
+start_pos = new UWVector2(x, y - 500);
+
+__uw_obj.transform.SetPositionAndAngleAndScale(
+	start_pos,
+	__uw_obj.transform.angle,
+	__uw_obj.transform.lossy_scale
+)
