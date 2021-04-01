@@ -1,7 +1,7 @@
 {
   "spriteId": {
-    "name": "__uw_spr_transform_demo_ui_button",
-    "path": "sprites/__uw_spr_transform_demo_ui_button/__uw_spr_transform_demo_ui_button.yy",
+    "name": "__uw_spr_transform_demo_ui_button_blue",
+    "path": "sprites/__uw_spr_transform_demo_ui_button_blue/__uw_spr_transform_demo_ui_button_blue.yy",
   },
   "solid": false,
   "visible": true,

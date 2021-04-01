@@ -3,6 +3,5 @@
 
 // Inherit the parent event
 event_inherited();
-
-draw_sprite(__uw_spr_transform_demo_ui_header, 1, x - 13, y);
-draw_text(x + 78, y + 9, "Press to move it!");
+draw_set_color(title_color);
+draw_text(x + 150, y + 40, "Press to move it!");

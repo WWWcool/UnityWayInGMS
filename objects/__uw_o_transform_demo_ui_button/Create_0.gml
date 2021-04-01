@@ -7,3 +7,4 @@ event_inherited();
 image_speed = 0;
 
 text = "Text not set";
+color = c_white;
