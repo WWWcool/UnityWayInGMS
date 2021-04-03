@@ -1,6 +1,7 @@
 # UnityWayInGMS
 
 [Посетите Вики для другой, но тоже интересной информации](https://github.com/WWWcool/UnityWayInGMS/wiki)
+[Ссылка на документацию извлеченную из проекта](https://wwwcool.github.io/UnityWayInGMS/index.html)
 
 ## Резюме
 UnityWay - это попытка создать расширяемую инфраструктуру для кодовой базы в рамках синтаксиса и особенностей движка GameMakerStudio 2 и его языка GML.
