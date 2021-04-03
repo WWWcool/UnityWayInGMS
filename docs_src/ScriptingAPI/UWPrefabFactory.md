@@ -13,3 +13,8 @@ Factory that can create or extend object from sequence blueprint.
 
 ## Returns
 `UWPrefabFactory` created factory
+
+## Methods
+| Name | Description |
+| ---- | ----------- |
+| [InstanceCreateLayer](UWPrefabFactory.InstanceCreateLayer.html) | Create instance from prefab |
