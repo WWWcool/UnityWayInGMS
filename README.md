@@ -1,6 +1,7 @@
 # UnityWayInGMS
 
 [Посетите Вики для другой, но тоже интересной информации](https://github.com/WWWcool/UnityWayInGMS/wiki)
+
 [Ссылка на документацию извлеченную из проекта](https://wwwcool.github.io/UnityWayInGMS/index.html)
 
 ## Резюме
