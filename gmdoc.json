@@ -1,0 +1,15 @@
+{
+  "_version": 2,
+  "project": "uw_base",
+  "project_name": "UnityWay",
+  "title": "UnityWay Docs",
+  "author": "WWW_cool",
+  "prefix": "__uw_",
+  "analytics": "",
+  "api": {
+    "rating": ""
+  },
+  "toc": {
+    "UnityWay Docs": "index.md"
+  }
+}
