@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="fontawesome-free-5.8.1-web/css/all.min.css">
+  <link href="prism.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+  <title>UnityWay Docs: Add</title>
+</head>
+<body>
+  <div class="d-flex flex-column h-100">
+    <header class="d-flex align-items-center bg-white border-bottom text-secondary text-center px-3 py-2">
+      <button id="btn-menu-toggler" class="navbar-toggler text-secondary" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="flex-grow-1 d-flex justify-content-center">
+        <a href="./" class="navbar-brand ml-3">
+          UnityWay Docs
+        </a>
+      </div>
+    </header>
+    <div class="d-flex overflow-hidden" style="flex-grow: 1;">
+      <aside id="side-menu" class="bg-light border-right overflow-y-auto">
+        <ul class="nav flex-column">
+          <li><i data-target="#folder-1" class="fas fa-circle text-primary bullet"></i> <a href="index.html" class="text-dark">UnityWay Docs</a></li>
+<li><i data-target="#folder-2" class="fas fa-minus-square text-primary cursor-pointer"></i> <a href="ScriptingAPI.html" class="text-dark">Scripting API</a>
+<ul id="folder-2">
+<li><i data-target="#folder-3" class="fas fa-plus-square text-primary cursor-pointer"></i> <a href="UWComponent.html" class="text-dark">UWComponent</a>
+<ul id="folder-3" style="display: none;">
+<li><i data-target="#folder-4" class="fas fa-circle text-primary bullet"></i> <a href="UWComponent.GetInfo.html" class="text-dark">GetInfo</a></li>
+<li><i data-target="#folder-5" class="fas fa-circle text-primary bullet"></i> <a href="UWComponent.throwNotImplemented.html" class="text-dark">throwNotImplemented</a></li>
+</ul>
+</li>
+<li><i data-target="#folder-6" class="fas fa-plus-square text-primary cursor-pointer"></i> <a href="UWComponentGroup.html" class="text-dark">UWComponentGroup</a>
+<ul id="folder-6" style="display: none;">
+<li><i data-target="#folder-7" class="fas fa-circle text-primary bullet"></i> <a href="UWComponentGroup.Execute.html" class="text-dark">Execute</a></li>
+<li><i data-target="#folder-8" class="fas fa-circle text-primary bullet"></i> <a href="UWComponentGroup.RemoveComponent.html" class="text-dark">RemoveComponent</a></li>
+<li><i data-target="#folder-9" class="fas fa-circle text-primary bullet"></i> <a href="UWComponentGroup.TryAddComponent.html" class="text-dark">TryAddComponent</a></li>
+</ul>
+</li>
+<li><i data-target="#folder-10" class="fas fa-minus-square text-primary cursor-pointer"></i> <a href="UWDelegate.html" class="text-dark">UWDelegate</a>
+<ul id="folder-10">
+<li><i data-target="#folder-11" class="fas fa-circle text-primary bullet"></i> <a href="UWDelegate.Add.html" class="text-dark font-weight-bold active">Add</a></li>
+<li><i data-target="#folder-12" class="fas fa-circle text-primary bullet"></i> <a href="UWDelegate.Remove.html" class="text-dark">Remove</a></li>
+<li><i data-target="#folder-13" class="fas fa-circle text-primary bullet"></i> <a href="UWDelegate.Run.html" class="text-dark">Run</a></li>
+</ul>
+</li>
+<li><i data-target="#folder-14" class="fas fa-plus-square text-primary cursor-pointer"></i> <a href="UWDependency.html" class="text-dark">UWDependency</a>
+<ul id="folder-14" style="display: none;">
+<li><i data-target="#folder-15" class="fas fa-circle text-primary bullet"></i> <a href="UWDependency.CheckDependencies.html" class="text-dark">CheckDependencies</a></li>
+</ul>
+</li>
+<li><i data-target="#folder-16" class="fas fa-plus-square text-primary cursor-pointer"></i> <a href="UWDependencyValidateError.html" class="text-dark">UWDependencyValidateError</a>
+<ul id="folder-16" style="display: none;">
+<li><i data-target="#folder-17" class="fas fa-circle text-primary bullet"></i> <a href="UWDependencyValidateError.FormatError.html" class="text-dark">FormatError</a></li>
+</ul>
+</li>
+<li><i data-target="#folder-18" class="fas fa-plus-square text-primary cursor-pointer"></i> <a href="UWObject.html" class="text-dark">UWObject</a>
+<ul id="folder-18" style="display: none;">
+<li><i data-target="#folder-19" class="fas fa-circle text-primary bullet"></i> <a href="UWObject.AddComponent.html" class="text-dark">AddComponent</a></li>
+<li><i data-target="#folder-20" class="fas fa-circle text-primary bullet"></i> <a href="UWObject.AddGroup.html" class="text-dark">AddGroup</a></li>
+<li><i data-target="#folder-21" class="fas fa-circle text-primary bullet"></i> <a href="UWObject.Clear.html" class="text-dark">Clear</a></li>
+<li><i data-target="#folder-22" class="fas fa-circle text-primary bullet"></i> <a href="UWObject.CreateFinished.html" class="text-dark">CreateFinished</a></li>
+<li><i data-target="#folder-23" class="fas fa-circle text-primary bullet"></i> <a href="UWObject.ExecuteGroup.html" class="text-dark">ExecuteGroup</a></li>
+<li><i data-target="#folder-24" class="fas fa-circle text-primary bullet"></i> <a href="UWObject.FindComponent.html" class="text-dark">FindComponent</a></li>
+<li><i data-target="#folder-25" class="fas fa-circle text-primary bullet"></i> <a href="UWObject.GetComponentByName.html" class="text-dark">GetComponentByName</a></li>
+<li><i data-target="#folder-26" class="fas fa-circle text-primary bullet"></i> <a href="UWObject.GetComponentByTypeID.html" class="text-dark">GetComponentByTypeID</a></li>
+<li><i data-target="#folder-27" class="fas fa-circle text-primary bullet"></i> <a href="UWObject.LinkToInstance.html" class="text-dark">LinkToInstance</a></li>
+<li><i data-target="#folder-28" class="fas fa-circle text-primary bullet"></i> <a href="UWObject.MapComponents.html" class="text-dark">MapComponents</a></li>
+<li><i data-target="#folder-29" class="fas fa-circle text-primary bullet"></i> <a href="UWObject.RemoveComponent.html" class="text-dark">RemoveComponent</a></li>
+<li><i data-target="#folder-30" class="fas fa-circle text-primary bullet"></i> <a href="UWObject.RemoveFromGroups.html" class="text-dark">RemoveFromGroups</a></li>
+<li><i data-target="#folder-31" class="fas fa-circle text-primary bullet"></i> <a href="UWObject.ShowHierarchy.html" class="text-dark">ShowHierarchy</a></li>
+<li><i data-target="#folder-32" class="fas fa-circle text-primary bullet"></i> <a href="UWObject.TryToAddToGroups.html" class="text-dark">TryToAddToGroups</a></li>
+</ul>
+</li>
+<li><i data-target="#folder-33" class="fas fa-circle text-primary bullet"></i> <a href="UWPrefabAction.html" class="text-dark">UWPrefabAction</a></li>
+<li><i data-target="#folder-34" class="fas fa-circle text-primary bullet"></i> <a href="UWPrefabFactory.html" class="text-dark">UWPrefabFactory</a></li>
+<li><i data-target="#folder-35" class="fas fa-plus-square text-primary cursor-pointer"></i> <a href="UWPrefabSetValueData.html" class="text-dark">UWPrefabSetValueData</a>
+<ul id="folder-35" style="display: none;">
+<li><i data-target="#folder-36" class="fas fa-circle text-primary bullet"></i> <a href="UWPrefabSetValueData.ApplyValueTo.html" class="text-dark">ApplyValueTo</a></li>
+<li><i data-target="#folder-37" class="fas fa-circle text-primary bullet"></i> <a href="UWPrefabSetValueData.SetDataFrom.html" class="text-dark">SetDataFrom</a></li>
+</ul>
+</li>
+<li><i data-target="#folder-38" class="fas fa-circle text-primary bullet"></i> <a href="UWSpriteRenderer.html" class="text-dark">UWSpriteRenderer</a></li>
+<li><i data-target="#folder-39" class="fas fa-circle text-primary bullet"></i> <a href="UWTransform.html" class="text-dark">UWTransform</a></li>
+<li><i data-target="#folder-40" class="fas fa-plus-square text-primary cursor-pointer"></i> <a href="UWUtilsDebug.html" class="text-dark">UWUtilsDebug</a>
+<ul id="folder-40" style="display: none;">
+<li><i data-target="#folder-41" class="fas fa-circle text-primary bullet"></i> <a href="UWUtilsDebug.GetIndentString.html" class="text-dark">GetIndentString</a></li>
+<li><i data-target="#folder-42" class="fas fa-circle text-primary bullet"></i> <a href="UWUtilsDebug.Println.html" class="text-dark">Println</a></li>
+<li><i data-target="#folder-43" class="fas fa-circle text-primary bullet"></i> <a href="UWUtilsDebug.PrintlnIfDefined.html" class="text-dark">PrintlnIfDefined</a></li>
+<li><i data-target="#folder-44" class="fas fa-circle text-primary bullet"></i> <a href="UWUtilsDebug.PrintlnWithIndent.html" class="text-dark">PrintlnWithIndent</a></li>
+<li><i data-target="#folder-45" class="fas fa-circle text-primary bullet"></i> <a href="UWUtilsDebug.PrintlnWithIndentIfDefined.html" class="text-dark">PrintlnWithIndentIfDefined</a></li>
+</ul>
+</li>
+<li><i data-target="#folder-46" class="fas fa-plus-square text-primary cursor-pointer"></i> <a href="UWVector2.html" class="text-dark">UWVector2</a>
+<ul id="folder-46" style="display: none;">
+<li><i data-target="#folder-47" class="fas fa-circle text-primary bullet"></i> <a href="UWVector2.Add.html" class="text-dark">Add</a></li>
+<li><i data-target="#folder-48" class="fas fa-circle text-primary bullet"></i> <a href="UWVector2.Angle.html" class="text-dark">Angle</a></li>
+<li><i data-target="#folder-49" class="fas fa-circle text-primary bullet"></i> <a href="UWVector2.ClampMagnitude.html" class="text-dark">ClampMagnitude</a></li>
+<li><i data-target="#folder-50" class="fas fa-circle text-primary bullet"></i> <a href="UWVector2.Distance.html" class="text-dark">Distance</a></li>
+<li><i data-target="#folder-51" class="fas fa-circle text-primary bullet"></i> <a href="UWVector2.Equals.html" class="text-dark">Equals</a></li>
+<li><i data-target="#folder-52" class="fas fa-circle text-primary bullet"></i> <a href="UWVector2.Inv.html" class="text-dark">Inv</a></li>
+<li><i data-target="#folder-53" class="fas fa-circle text-primary bullet"></i> <a href="UWVector2.Lerp.html" class="text-dark">Lerp</a></li>
+<li><i data-target="#folder-54" class="fas fa-circle text-primary bullet"></i> <a href="UWVector2.LerpUnclamped.html" class="text-dark">LerpUnclamped</a></li>
+<li><i data-target="#folder-55" class="fas fa-circle text-primary bullet"></i> <a href="UWVector2.Magnitude.html" class="text-dark">Magnitude</a></li>
+<li><i data-target="#folder-56" class="fas fa-circle text-primary bullet"></i> <a href="UWVector2.Max.html" class="text-dark">Max</a></li>
+<li><i data-target="#folder-57" class="fas fa-circle text-primary bullet"></i> <a href="UWVector2.Min.html" class="text-dark">Min</a></li>
+<li><i data-target="#folder-58" class="fas fa-circle text-primary bullet"></i> <a href="UWVector2.MoveTowards.html" class="text-dark">MoveTowards</a></li>
+<li><i data-target="#folder-59" class="fas fa-circle text-primary bullet"></i> <a href="UWVector2.Mult.html" class="text-dark">Mult</a></li>
+<li><i data-target="#folder-60" class="fas fa-circle text-primary bullet"></i> <a href="UWVector2.Scale.html" class="text-dark">Scale</a></li>
+<li><i data-target="#folder-61" class="fas fa-circle text-primary bullet"></i> <a href="UWVector2.Set.html" class="text-dark">Set</a></li>
+<li><i data-target="#folder-62" class="fas fa-circle text-primary bullet"></i> <a href="UWVector2.SignedAngle.html" class="text-dark">SignedAngle</a></li>
+<li><i data-target="#folder-63" class="fas fa-circle text-primary bullet"></i> <a href="UWVector2.SqrMagnitude.html" class="text-dark">SqrMagnitude</a></li>
+<li><i data-target="#folder-64" class="fas fa-circle text-primary bullet"></i> <a href="UWVector2.Sub.html" class="text-dark">Sub</a></li>
+<li><i data-target="#folder-65" class="fas fa-circle text-primary bullet"></i> <a href="UWVector2.ToString.html" class="text-dark">ToString</a></li>
+</ul>
+</li>
+<li><i data-target="#folder-66" class="fas fa-circle text-primary bullet"></i> <a href="__uw_check_instance.html" class="text-dark">__uw_check_instance</a></li>
+<li><i data-target="#folder-67" class="fas fa-circle text-primary bullet"></i> <a href="__uw_instance_create_layer.html" class="text-dark">__uw_instance_create_layer</a></li>
+<li><i data-target="#folder-68" class="fas fa-circle text-primary bullet"></i> <a href="__uw_prefab_create_factories.html" class="text-dark">__uw_prefab_create_factories</a></li>
+<li><i data-target="#folder-69" class="fas fa-circle text-primary bullet"></i> <a href="__uw_validate_dep_tree.html" class="text-dark">__uw_validate_dep_tree</a></li>
+<li><i data-target="#folder-70" class="fas fa-circle text-primary bullet"></i> <a href="array_clone.html" class="text-dark">array_clone</a></li>
+<li><i data-target="#folder-71" class="fas fa-circle text-primary bullet"></i> <a href="array_copy2.html" class="text-dark">array_copy2</a></li>
+<li><i data-target="#folder-72" class="fas fa-circle text-primary bullet"></i> <a href="string_split.html" class="text-dark">string_split</a></li>
+</ul>
+</li>
+
+        </ul>
+      </aside>
+      <div id="page-wrapper" class="container-fluid overflow-x-auto overflow-y-auto p-0 bg-white">
+        <div id="page-content" class="container py-3">
+          <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="ScriptingAPI.html">Scripting API</a></li><li class="breadcrumb-item"><a href="UWDelegate.html">UWDelegate</a></li><li class="breadcrumb-item active">Add</li></nav></ol>
+<h1>Add</h1>
+<p><span class="badge badge-secondary">function</span></p>
+<h2>Description</h2>
+<p>Associate method with this delegate</p>
+<h2>Arguments</h2>
+<div class="table-responsive"><table class="table table-sm table-striped border table-arguments">
+<thead><tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>_method_or_function</td>
+<td>`script</td>
+<td>method`</td>
+<td></td>
+</tr>
+<tr>
+<td>_context</td>
+<td>`instance</td>
+<td>struct`</td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+
+
+          
+
+          <div class="d-flex w-100 rounded bg-light align-items-center justify-content-between px-3 mt-3" style="font-size: 3em;">
+            <a href="UWDelegate.html">
+              <i class="fas fa-arrow-circle-left text-dark"></i>
+            </a>
+            <a href="UWDelegate.Remove.html">
+              <i class="fas fa-arrow-circle-right text-dark"></i>
+            </a>
+          </div>
+
+          <hr>
+
+          <p>
+            <small class="text-muted">
+              Copyright &copy; 2021, WWW_cool. Built on April 03, 2021 using
+              <a href="https://github.com/kraifpatrik/gmdoc">GMDoc</a>.
+            </small>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <script src="jquery-3.4.1.min.js"></script>
+  <script src="bootstrap-4.3.1-dist/js/bootstrap.bundle.min.js"></script>
+  <script src="prism.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

@@ -6,3 +6,6 @@
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _type_id | `number` | component type id |
+
+## Returns
+`UWComponent` found component

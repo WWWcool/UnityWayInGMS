@@ -1,16 +1,16 @@
 // Unity way library. For more information see the documentation here:
 // https://github.com/WWWcool/UnityWayInGMS/wiki
 
-/// A delegate is a type that represents method references with a specific parameter list. 
+/// @desc A delegate is a type that represents method references with a specific parameter list. 
 /// When you instantiate a delegate, that instance can be associated with any method with a compatible signature.
 /// The method can be called (activated) using a delegate instance. 
-/// @returns {UWDelegate} created delegate
+/// @return {UWDelegate} created delegate
 
 function UWDelegate() constructor
 {
     list = [];
     
-    /// Associate method with this delegate
+    /// @desc Associate method with this delegate
     /// @param {script | method} _method_or_function
     /// @param {instance | struct} _context
     
@@ -26,7 +26,7 @@ function UWDelegate() constructor
         );
     }
     
-    /// Dissociate method from this delegate
+    /// @desc Dissociate method from this delegate
     /// @param {script | method} _method_or_function
     /// @param {instance | struct} _context
     
@@ -43,7 +43,7 @@ function UWDelegate() constructor
         }
     }
     
-    /// Activate all methods associated with this delegate
+    /// @desc Activate all methods associated with this delegate
     /// @param {any} [_args] args to pass to all methods
     
     static Run = function()

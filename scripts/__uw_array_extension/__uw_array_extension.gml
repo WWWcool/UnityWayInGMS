@@ -1,7 +1,7 @@
 // Unity way library. For more information see the documentation here:
 // https://github.com/WWWcool/UnityWayInGMS/wiki
 
-/// With this function you can copy all or part of an array into another array at any position.
+/// @desc With this function you can copy all or part of an array into another array at any position.
 /// @param {array<T>} dest
 /// @param {number} dest_index
 /// @param {array<T>} src
@@ -19,9 +19,9 @@ function array_copy2(dest, dest_index, src, src_index, length)
     }
 }
 
-/// With this function you can create full copy of passed array.
+/// @desc With this function you can create full copy of passed array.
 /// @param {array<T>} array
-/// @returns {array<T>}
+/// @return {array<T>}
 
 function array_clone(array)
 {

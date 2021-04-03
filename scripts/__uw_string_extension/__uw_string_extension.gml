@@ -1,8 +1,8 @@
 
-/// Returns a string array that contains the substrings in this instance that are delimited by elements of a specified string.
+/// @desc return a string array that contains the substrings in this instance that are delimited by elements of a specified string.
 /// @param {string} _data string instance
 /// @param {string} _separator a string that delimit the substrings in this instance. 
-/// @returns {array(string)} created data
+/// @return {array(string)} created data
 
 function string_split(_data, _separator)
 {

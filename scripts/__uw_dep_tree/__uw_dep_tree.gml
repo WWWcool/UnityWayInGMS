@@ -16,13 +16,13 @@
 #macro UW_VECTOR_MIN_VERSION 1
 #macro UW_TRANSFORM_MIN_VERSION 1
 
-/// Dependency represents uw components connections to other components or libs.
+/// @desc Dependency represents uw components connections to other components or libs.
 /// @param {string} _name
 /// @param {bool} _defined
 /// @param {number} _version
 /// @param {number} _min_version
 /// @param {array(UWDependency)} _deps
-/// @returns {UWDependency} created dependency
+/// @return {UWDependency} created dependency
 
 function UWDependency(_name, _defined, _version, _min_version, _deps) constructor
 {
@@ -32,11 +32,11 @@ function UWDependency(_name, _defined, _version, _min_version, _deps) constructo
 	min_version = _min_version;
 	deps = _deps;
 	
-	/// Check self defined and if ok check self deps defined
+	/// @desc Check self defined and if ok check self deps defined
     ///
     /// @param {out array(UWDependencyValidateError)} _errors
 	/// @param {number} _indent
-    /// @returns {bool} has errors
+    /// @return {bool} has errors
     
     CheckDependencies = function(_errors, _indent)
     {
@@ -91,11 +91,11 @@ function UWDependency(_name, _defined, _version, _min_version, _deps) constructo
     }
 }
 
-/// Represents error of dependency validation.
+/// @desc Represents error of dependency validation.
 /// @param {string} _name
 /// @param {string} _reason
 /// @param {number} _indent
-/// @returns {UWDependencyValidateError} created error
+/// @return {UWDependencyValidateError} created error
 
 function UWDependencyValidateError(_name, _reason, _indent) constructor
 {
@@ -105,7 +105,7 @@ function UWDependencyValidateError(_name, _reason, _indent) constructor
 	
 	static debug = new UWUtilsDebug(UW_DEPENDENCY_PREFIX);
 	
-	/// @returns {string} formatted error
+	/// @return {string} formatted error
     
     FormatError = function()
 	{
@@ -113,7 +113,7 @@ function UWDependencyValidateError(_name, _reason, _indent) constructor
 	}
 }
 
-/// Use macro redefinition to validate hardcoded dependency tree
+/// @desc Use macro redefinition to validate hardcoded dependency tree
 
 function __uw_validate_dep_tree()
 {

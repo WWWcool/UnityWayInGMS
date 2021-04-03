@@ -6,9 +6,9 @@
 #macro UW_SPRITE_RENDERER_DEFINED true
 #macro UW_SPRITE_RENDERER_VERSION 1
 
-/// Renders a Sprite for 2D graphics.
+/// @desc Renders a Sprite for 2D graphics.
 /// @param {sprite} [_sprite] sprite to render
-/// @returns {UWSpriteRenderer} created sprite_renderer
+/// @return {UWSpriteRenderer} created sprite_renderer
 
 function UWSpriteRenderer(_sprite) : UWComponent(UW_SPRITE_RENDERER_TYPE_ID, UW_SPRITE_RENDERER_NAME) constructor
 {
@@ -26,8 +26,8 @@ function UWSpriteRenderer(_sprite) : UWComponent(UW_SPRITE_RENDERER_TYPE_ID, UW_
         DrawSprite();
     }
     
-    /// Get info string specific for this component
-    /// @returns {string} info
+    /// @desc Get info string specific for this component
+    /// @return {string} info
     
     static GetInfo = function()
     {

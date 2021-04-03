@@ -19,7 +19,7 @@
 #macro UW_PREFAB_DEFAULT_TRACK_ROTATION "rotation"
 #macro UW_PREFAB_DEFAULT_TRACK_ORIGIN   "origin"
 
-/// Parse sequences taged with "__uw_prefab" and make global object factory for each of it
+/// @desc Parse sequences taged with "__uw_prefab" and make global object factory for each of it
 
 function __uw_prefab_create_factories()
 {
@@ -342,10 +342,10 @@ function __uw_prefab_create_factories()
     }
 }
 
-/// Factory that can create or extend object from sequence blueprint.
+/// @desc Factory that can create or extend object from sequence blueprint.
 /// @param {string} _id prefab sequence name
 /// @param {array} _actions 
-/// @returns {UWPrefabFactory} created factory
+/// @return {UWPrefabFactory} created factory
 
 function UWPrefabFactory(_id, _actions) constructor
 {
@@ -510,11 +510,11 @@ enum UWPrefabActionType
     set_value
 }
 
-/// Action that can create or change object or component struct.
+/// @desc Action that can create or change object or component struct.
 /// @param {UWPrefabActionType} _type action context
 /// @param _data data specific for action type
 /// @param _level level on witch action should exec
-/// @returns {UWPrefabAction} created action
+/// @return {UWPrefabAction} created action
 
 function UWPrefabAction(_type, _data, _level) constructor
 {
@@ -532,10 +532,10 @@ enum UWPrefabActionValueType
     asset_id
 }
 
-/// Data to set value of created instance.
+/// @desc Data to set value of created instance.
 /// @param {UWPrefabActionValueType} _type value type
 /// @param {string} _name value name
-/// @returns {UWPrefabSetValueData} created data
+/// @return {UWPrefabSetValueData} created data
 
 function UWPrefabSetValueData(_type, _name) constructor
 {

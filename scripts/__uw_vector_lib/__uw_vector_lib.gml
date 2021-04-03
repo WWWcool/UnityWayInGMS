@@ -4,12 +4,12 @@
 //#macro UW_VECTOR_DEFINED true
 //#macro UW_VECTOR_VERSION 1
 
-/// Representation of 2D vectors and points.
+/// @desc Representation of 2D vectors and points.
 /// TODO: need unit test for this
 ///
 /// @param {number} _x X component of the vector.
 /// @param {number} _y Y component of the vector.
-/// @returns {UWVector2} created vector2
+/// @return {UWVector2} created vector2
 
 function UWVector2(_x, _y) constructor
 {
@@ -23,12 +23,12 @@ function UWVector2(_x, _y) constructor
     x = _x;
     y = _y;
     
-    /// Linearly interpolates between vectors a and b by t.
+    /// @desc Linearly interpolates between vectors a and b by t.
     ///
     /// @param {UWVector2} _a
     /// @param {UWVector2} _b
     /// @param {number} _t
-    /// @returns {UWVector2} vector2
+    /// @return {UWVector2} vector2
     
     static Lerp = function(_a, _b, _t)
     {
@@ -36,24 +36,24 @@ function UWVector2(_x, _y) constructor
         return new UWVector2(_a.x + (_b.x - _a.x) * _t, _a.y + (_b.y - _a.y) * _t);
     }
     
-    /// Linearly interpolates between vectors a and b by t.
+    /// @desc Linearly interpolates between vectors a and b by t.
     ///
     /// @param {UWVector2} _a
     /// @param {UWVector2} _b
     /// @param {number} _t
-    /// @returns {UWVector2} vector2
+    /// @return {UWVector2} vector2
     
     static LerpUnclamped = function(_a, _b, _t)
     {
         return new UWVector2(_a.x + (_b.x - _a.x) * _t, _a.y + (_b.y - _a.y) * _t);
     }
     
-    /// Moves a point current towards target.
+    /// @desc Moves a point current towards target.
     ///
     /// @param {UWVector2} _current
     /// @param {UWVector2} _target
     /// @param {number} _max_distance_delta
-    /// @returns {UWVector2} vector2
+    /// @return {UWVector2} vector2
     
     static MoveTowards = function(
         _current,
@@ -77,55 +77,55 @@ function UWVector2(_x, _y) constructor
         );
     }
     
-    /// Multiplies two vectors component-wise.
+    /// @desc Multiplies two vectors component-wise.
     ///
     /// @param {UWVector2} _a
     /// @param {UWVector2} _b
-    /// @returns {UWVector2} vector2
+    /// @return {UWVector2} vector2
     
     static Scale = function(_a, _b)
     {
         return new UWVector2(_a.x * _b.x, _a.y * _b.y);
     }
     
-    /// Returns the unsigned angle in degrees between from and to.
+    /// @desc return the unsigned angle in degrees between from and to.
     ///
     /// @param {UWVector2} _from
     /// @param {UWVector2} _to
-    /// @returns {number} angle
+    /// @return {number} angle
     
     static Angle = function(_from, _to)
     {
         return point_direction(_from.x, _from.y, _to.x, _to.y);
     }
     
-    /// Returns the signed angle in degrees between from and to.
+    /// @desc return the signed angle in degrees between from and to.
     ///
     /// @param {UWVector2} _from
     /// @param {UWVector2} _to
-    /// @returns {number} angle
+    /// @return {number} angle
     
     static SignedAngle = function(_from, _to)
     {
         return UWVector2.Angle(_from, _to) * sign((_from.x * _to.y - _from.y * _to.x));
     }
     
-    /// Returns the distance between a and b.
+    /// @desc return the distance between a and b.
     ///
     /// @param {UWVector2} _a
     /// @param {UWVector2} _b
-    /// @returns {number} distance
+    /// @return {number} distance
     
     static Distance = function(_a, _b)
     {
         return point_distance(_a.x, _a.y, _b.x, _b.y);
     }
     
-    /// Returns a copy of vector with its magnitude clamped to maxLength.
+    /// @desc return a copy of vector with its magnitude clamped to maxLength.
     ///
     /// @param {UWVector2} _vector
     /// @param {number} _max_length
-    /// @returns {UWVector2} magnitude
+    /// @return {UWVector2} magnitude
     
     static ClampMagnitude = function(_vector, _max_length)
     {
@@ -138,29 +138,29 @@ function UWVector2(_x, _y) constructor
         return new UWVector2(num2 * _max_length, num3 * _max_length);
     }
     
-    /// Returns a vector that is made from the smallest components of two vectors.
+    /// @desc return a vector that is made from the smallest components of two vectors.
     ///
     /// @param {UWVector2} _lhs
     /// @param {UWVector2} _rhs
-    /// @returns {UWVector2} vector2
+    /// @return {UWVector2} vector2
     
     static Min = function(_lhs, _rhs)
     {
         return new UWVector2(min(_lhs.x, _rhs.x), min(_lhs.y, _rhs.y));
     }
     
-    /// Returns a vector that is made from the largest components of two vectors.
+    /// @desc return a vector that is made from the largest components of two vectors.
     ///
     /// @param {UWVector2} _lhs
     /// @param {UWVector2} _rhs
-    /// @returns {UWVector2} vector2
+    /// @return {UWVector2} vector2
     
     static Max = function(_lhs, _rhs)
     {
         return new UWVector2(max(_lhs.x, _rhs.x), max(_lhs.y, _rhs.y));
     }
     
-    /// Set x and y components of an existing Vector2.
+    /// @desc Set x and y components of an existing Vector2.
     ///
     /// @param {number} _new_x
     /// @param {number} _new_y
@@ -171,7 +171,7 @@ function UWVector2(_x, _y) constructor
         y = _new_y;
     }
     
-    /// Multiplies every component of this vector by the same component of scale.
+    /// @desc Multiplies every component of this vector by the same component of scale.
     ///
     /// @param {UWVector2} _scale
     
@@ -181,31 +181,31 @@ function UWVector2(_x, _y) constructor
         y *= _scale.y;
     }
     
-    /// Returns the length of this vector (Read Only).
-    /// @returns {number} magnitude
+    /// @desc return the length of this vector (Read Only).
+    /// @return {number} magnitude
     
     static Magnitude = function(){ return sqrt(x * x + y * y);}
     
-    /// Returns the squared length of this vector (Read Only).
-    /// @returns {number} sqr magnitude
+    /// @desc return the squared length of this vector (Read Only).
+    /// @return {number} sqr magnitude
     
     static SqrMagnitude = function(){ return x * x + y * y;}
     
-    /// @returns {UWVector2} vector2
+    /// @return {UWVector2} vector2
     
     static Add = function(_vector)
     {
         return new UWVector2(x + _vector.x, y + _vector.y);
     }
     
-    /// @returns {UWVector2} vector2
+    /// @return {UWVector2} vector2
     
     static Sub = function(_vector)
     {
         return new UWVector2(x - _vector.x, y - _vector.y);
     }
     
-    /// @returns {UWVector2} vector2
+    /// @return {UWVector2} vector2
     
     static Mult = function(_vector_or_number)
     {
@@ -214,7 +214,7 @@ function UWVector2(_x, _y) constructor
             is_numeric(_vector_or_number) ? y * _vector_or_number : y * _vector_or_number.y);
     }
     
-    /// @returns {UWVector2} vector2
+    /// @return {UWVector2} vector2
     
     static Div = function(_vector_or_number)
     {
@@ -223,14 +223,14 @@ function UWVector2(_x, _y) constructor
             is_numeric(_vector_or_number) ? y / _vector_or_number : y / _vector_or_number.y);
     }
     
-    /// @returns {UWVector2} vector2
+    /// @return {UWVector2} vector2
     
     static Inv = function()
     {
         return new UWVector2(-x, -y);
     }
     
-    /// @returns {bool} is equals
+    /// @return {bool} is equals
     
     static Equals = function(_vector)
     {
@@ -239,7 +239,7 @@ function UWVector2(_x, _y) constructor
         return num1 * num1 + num2 * num2 < math_get_epsilon();
     }
     
-    /// @returns {string} formatted output
+    /// @return {string} formatted output
     
     static ToString = function()
     {

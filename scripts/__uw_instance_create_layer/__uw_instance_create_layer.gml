@@ -1,13 +1,13 @@
 // Unity way library. For more information see the documentation here:
 // https://github.com/WWWcool/UnityWayInGMS/wiki
-/// Create instance with transform link to parent UWTransform
+/// @desc Create instance with transform link to parent UWTransform
 ///
 /// @param {number} _x The x position the object will be created at
 /// @param {number} _y The y position the object will be created at
 /// @param {layer} _layer_id_or_name The layer ID (or name) to assign the created instance to
 /// @param {object} _obj The object index of the object to create an instance of
 /// @param {UWTransform} _parent UWObject base instance or UWObject or UWTransform to link this instance to
-/// @returns {object} created instance
+/// @return {object} created instance
 
 function __uw_instance_create_layer(_x, _y, _layer_id_or_name, _obj, _parentOrInst)
 {

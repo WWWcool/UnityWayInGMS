@@ -1,9 +1,9 @@
 // Unity way library. For more information see the documentation here:
 // https://github.com/WWWcool/UnityWayInGMS/wiki
 
-/// Struct for encapsulate debug utils functions
+/// @desc Struct for encapsulate debug utils functions
 /// @param {string} [_prefix] start of each debug out
-/// @returns {UWUtilsDebug} created debug utils
+/// @return {UWUtilsDebug} created debug utils
 
 function UWUtilsDebug() constructor
 {
@@ -49,7 +49,7 @@ function UWUtilsDebug() constructor
     }
     
     /// @param {number} [_indent]
-    /// @returns {string} string with passed number of indent
+    /// @return {string} string with passed number of indent
     
     static GetIndentString = function(_indent)
 	{

@@ -5,10 +5,10 @@
 //#macro UW_TRANSFORM_DEFINED true
 //#macro UW_TRANSFORM_VERSION 1
 
-/// Position, rotation and scale of an object.
+/// @desc Position, rotation and scale of an object.
 /// @param {UWTransform} [_parent]
 /// @param {object} [_obj] Instance of an object if we want transform control it
-/// @returns {UWTransform} created transform
+/// @return {UWTransform} created transform
 
 function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) constructor
 {
@@ -27,8 +27,8 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
 		*** SEE LATE INIT AT THE END OF THIS FILE ***
 	***/
 	
-	/// Get info string specific for this component
-    /// @returns {string} info
+	/// @desc Get info string specific for this component
+    /// @return {string} info
     
     static GetInfo = function()
     {
@@ -37,7 +37,7 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
         " scale: " + lossy_scale.ToString();
     }
 	
-	/// Set the instance of the transform.
+	/// @desc Set the instance of the transform.
     ///
     /// @param {object} _obj
     /// @param {bool} [_object_position_stays]
@@ -79,7 +79,7 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
         }
     }
 	
-    /// Set the parent of the transform.
+    /// @desc Set the parent of the transform.
     ///
     /// @param {UWTransform} _transform
     /// @param {bool} [_world_position_stays]
@@ -135,7 +135,7 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
         }
     }
     
-    /// Sets the world space position, angle and scale of the Transform component.
+    /// @desc Sets the world space position, angle and scale of the Transform component.
     ///
     /// @param {UWVector2} _position
     /// @param {number} _angle
@@ -180,7 +180,7 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
         });
     }
     
-    /// Sets the local space position, angle and scale of the Transform component.
+    /// @desc Sets the local space position, angle and scale of the Transform component.
     ///
     /// @param {UWVector2} _position
     /// @param {number} _angle
@@ -225,7 +225,7 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
         });
     }
     
-    /// Moves the transform in the direction and distance of translation.
+    /// @desc Moves the transform in the direction and distance of translation.
     ///
     /// @param {UWVector2} _translation
     /// @param {UWTransform} _relativeTo
@@ -235,7 +235,7 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
         throwNotImplemented("Translate");
     }
     
-    /// Rotates the object around by the number of degrees defined by the given angle.
+    /// @desc Rotates the object around by the number of degrees defined by the given angle.
     ///
     /// @param {UWVector2} _angle
     /// @param {UWTransform} _relativeTo
@@ -245,7 +245,7 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
         throwNotImplemented("Rotate");
     }
     
-    /// Rotates the transform so the forward vector points at target's current position.
+    /// @desc Rotates the transform so the forward vector points at target's current position.
     ///
     /// @param {UWTransform} _target
     
@@ -254,50 +254,50 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
         throwNotImplemented("LookAt");
     }
     
-    /// Transforms direction from local space to world space.
+    /// @desc Transforms direction from local space to world space.
     ///
     /// @param {number} _direction
-    /// @returns {number} world space direction
+    /// @return {number} world space direction
     
     static TransformDirection = function(_direction)
     {
         return _direction + angle;
     }
     
-    /// Transforms a direction from world space to local space.
+    /// @desc Transforms a direction from world space to local space.
     ///
     /// @param {number} _direction
-    /// @returns {number} local space direction
+    /// @return {number} local space direction
     
     static InverseTransformDirection = function(_direction)
     {
         return _direction - angle;
     }
     
-    /// Transforms scale from local space to world space.
+    /// @desc Transforms scale from local space to world space.
     ///
     /// @param {UWVector2} _scale
-    /// @returns {UWVector2} world space scale
+    /// @return {UWVector2} world space scale
     
     static TransformScale = function(_scale)
     {
         return _scale.Mult(lossy_scale);
     }
     
-    /// Transforms scale from world space to local space.
+    /// @desc Transforms scale from world space to local space.
     ///
     /// @param {UWVector2} _scale
-    /// @returns {UWVector2} local space scale
+    /// @return {UWVector2} local space scale
     
     static InverseTransformScale = function(_scale)
     {
         return _scale.Div(lossy_scale);
     }
     
-    /// Transforms vector from local space to world space.
+    /// @desc Transforms vector from local space to world space.
     ///
     /// @param {UWVector2} _vector
-    /// @returns {UWVector2} world space vector
+    /// @return {UWVector2} world space vector
     
     static TransformVector = function(_vector)
     {
@@ -313,10 +313,10 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
         return new UWVector2(world_x, world_y);
     }
     
-    /// Transforms vector from world space to local space.
+    /// @desc Transforms vector from world space to local space.
     ///
     /// @param {UWVector2} _vector
-    /// @returns {UWVector2} local space vector
+    /// @return {UWVector2} local space vector
     
     static InverseTransformVector = function(_vector)
     {
@@ -333,15 +333,15 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
         return new UWVector2(local_x, local_y);
     }
     
-    /// Returns the topmost transform in the hierarchy.
-    /// @returns {UWTransform} root transform
+    /// @desc return the topmost transform in the hierarchy.
+    /// @return {UWTransform} root transform
     
     static GetRoot = function()
     {
         return parent == noone ? self : parent.GetRoot();
     }
     
-    /// Unparents all children.
+    /// @desc Unparents all children.
     
     static DetachChildren = function()
     {
@@ -349,10 +349,10 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
         childs = [];
     }
     
-    /// Is this transform a child of parent?
+    /// @desc Is this transform a child of parent?
     ///
     /// @param {UWTransform} _transform
-    /// @returns {bool} is child of passed transform
+    /// @return {bool} is child of passed transform
     
     static IsChildOf = function(_transform)
     {
@@ -370,10 +370,10 @@ function UWTransform() : UWComponent(UW_TRANSFORM_TYPE_ID, UW_TRANSFORM_NAME) co
         return false;
     }
     
-    /// Returns a transform child by index.
+    /// @desc return a transform child by index.
     ///
     /// @param {number} _index Integer - Index of the child transform to return. Must be smaller than UWTransform.childCount.
-    /// @returns {UWTransform} child transform
+    /// @return {UWTransform} child transform
     
     static GetChild = function(_index)
     {

@@ -9,10 +9,10 @@
 #macro UW_COMPONENT_GROUP_STEP "UWGroupStep"
 #macro UW_COMPONENT_GROUP_DRAW "UWGroupDraw"
 
-/// Check if instance suitable for unity way
+/// @desc Check if instance suitable for unity way
 ///
 /// @param {object} _obj Instance id
-/// @returns {bool} check result
+/// @return {bool} check result
 
 function __uw_check_instance(_obj)
 {
@@ -25,9 +25,9 @@ function __uw_check_instance(_obj)
     return true;
 }
 
-/// Base container for unity way logic
+/// @desc Base container for unity way logic
 /// @param {object} [_obj] Instance id
-/// @returns {UWObject} created uw object
+/// @return {UWObject} created uw object
 
 function UWObject() constructor
 {
@@ -38,7 +38,7 @@ function UWObject() constructor
     groups = {};
     groups_names = [];
     
-    /// Print all components and childs of object
+    /// @desc Print all components and childs of object
     /// @param {number} _indent
     
     static ShowHierarchy = function(_indent)
@@ -93,7 +93,7 @@ function UWObject() constructor
         }
     }
     
-    /// Link uw object to game object
+    /// @desc Link uw object to game object
     
     static LinkToInstance = function(_inst)
     {
@@ -107,7 +107,7 @@ function UWObject() constructor
         }
     }
     
-    /// Clear all components in object
+    /// @desc Clear all components in object
     
     static Clear = function()
     {
@@ -117,9 +117,9 @@ function UWObject() constructor
         groups_names = [];
     }
     
-    /// Add component to object
+    /// @desc Add component to object
     /// @param {UWComponent} _cmp component to add
-    /// @returns {bool} result
+    /// @return {bool} result
     
     static AddComponent = function(_cmp)
     {
@@ -153,9 +153,9 @@ function UWObject() constructor
         return true;
     }
     
-    /// Remove component from object
+    /// @desc Remove component from object
     /// @param {UWComponent} _cmp component to remove
-    /// @returns {bool} result
+    /// @return {bool} result
     
     static RemoveComponent = function(_cmp)
     {
@@ -171,7 +171,7 @@ function UWObject() constructor
     }
     
     /// @param {number} _type_id component type id
-    /// @returns {UWComponent} found component
+    /// @return {UWComponent} found component
     
     static GetComponentByTypeID = function(_type_id)
     {
@@ -179,7 +179,7 @@ function UWObject() constructor
     }
     
     /// @param {string} _name component name
-    /// @returns {UWComponent} found component
+    /// @return {UWComponent} found component
     
     static GetComponentByName = function(_name)
     {
@@ -192,14 +192,14 @@ function UWObject() constructor
         );
     }
     
-    /// Trigger this function to emit create event for all components already added to object
+    /// @desc Trigger this function to emit create event for all components already added to object
     
     static CreateFinished = function()
     {
         ExecuteGroup(UW_COMPONENT_GROUP_CREATE);
     }
     
-    /// Add component group to object
+    /// @desc Add component group to object
     /// @param {string} _type index in object groups
     /// @param {script} _check_func function that check if component suitable for group
     /// @param {script} _exec_func function that do some work for group
@@ -242,7 +242,7 @@ function UWObject() constructor
         }
     }
     
-    /// Execute all component that feat group
+    /// @desc Execute all component that feat group
     /// @param {string} _type index in object groups
     /// @param {array} [_args] some args passed to exec function
     
@@ -268,7 +268,7 @@ function UWObject() constructor
         }
     }
     
-    /// Map all component with passed function and optional arguments
+    /// @desc Map all component with passed function and optional arguments
     /// @param _map_func
     /// @param _arg some args passed to function
     
@@ -290,10 +290,10 @@ function UWObject() constructor
         }
     }
     
-    /// Find component with passed find func
+    /// @desc Find component with passed find func
     /// @param _find_func
     /// @param _arg some args passed to function
-    /// @returns {UWComponent} found component
+    /// @return {UWComponent} found component
     
     static FindComponent = function(_find_func)
     {
@@ -324,10 +324,10 @@ function UWObject() constructor
     }
 }
 
-/// Base component for unity way logic
+/// @desc Base component for unity way logic
 /// @param {number} _type_id component type id
 /// @param {string} _name component name
-/// @returns {UWComponent} created component
+/// @return {UWComponent} created component
 
 function UWComponent(_type_id, _name) constructor
 {
@@ -335,15 +335,15 @@ function UWComponent(_type_id, _name) constructor
     name = _name;
     game_object = noone;
     
-    /// Get info string specific for this component
-    /// @returns {string} info
+    /// @desc Get info string specific for this component
+    /// @return {string} info
     
     static GetInfo = function()
     {
         return "";
     }
     
-    /// Throw error if function is not implemented
+    /// @desc Throw error if function is not implemented
     /// @param {string} _func_name name of not implemented function
     
     static throwNotImplemented = function(_func_name)
@@ -356,11 +356,11 @@ function UWComponent(_type_id, _name) constructor
     }
 }
 
-/// Group components by some feature
+/// @desc Group components by some feature
 /// @param {string} _type index in object groups
 /// @param {script} _check_func function that check if component suitable for group
 /// @param {script} _exec_func function that do some work for group
-/// @returns {UWComponentGroup} created component group
+/// @return {UWComponentGroup} created component group
 
 function UWComponentGroup(_type, _check_func, _exec_func) constructor
 {
@@ -369,7 +369,7 @@ function UWComponentGroup(_type, _check_func, _exec_func) constructor
     check_func = _check_func;
     exec_func = _exec_func;
     
-    /// Add component to group if it pass check
+    /// @desc Add component to group if it pass check
     /// @param {UWComponent} _cmp
     
     static TryAddComponent = function(_cmp)
@@ -380,7 +380,7 @@ function UWComponentGroup(_type, _check_func, _exec_func) constructor
         }
     }
     
-    /// Remove component from group
+    /// @desc Remove component from group
     /// @param {UWComponent} _cmp
     
     static RemoveComponent = function(_cmp)
@@ -395,7 +395,7 @@ function UWComponentGroup(_type, _check_func, _exec_func) constructor
         }
     }
     
-    /// Execute all component in group
+    /// @desc Execute all component in group
     /// @param {array} [_args] some args passed to exec function
     
     static Execute = function()

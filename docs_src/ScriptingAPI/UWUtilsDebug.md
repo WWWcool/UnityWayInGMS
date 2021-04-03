@@ -2,6 +2,17 @@
 
 <span class="badge badge-secondary">constructor</span>
 
+## Description
+Struct for encapsulate debug utils functions
+
+## Arguments
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _prefix | `string` | start of each debug out |
+
+## Returns
+`UWUtilsDebug` created debug utils
+
 ## Methods
 | Name | Description |
 | ---- | ----------- |
