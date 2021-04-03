@@ -21,6 +21,8 @@ function UWSpriteRenderer(_sprite) : UWComponent(UW_SPRITE_RENDERER_TYPE_ID, UW_
     flipX = false;
     flipY = false;
     
+    /// @desc Method to fit into standart draw component group
+    
     static draw = function()
     {
         DrawSprite();
@@ -34,12 +36,17 @@ function UWSpriteRenderer(_sprite) : UWComponent(UW_SPRITE_RENDERER_TYPE_ID, UW_
         return "sprite: " + string(sprite);
     }
     
+    /// @desc Set new sprite for 2D renderer.
+    /// @param {sprite} [_sprite] sprite to render
+    
     static SetSprite = function(_sprite)
     {
         sprite = _sprite;
         subimg_count = sprite_get_number(_sprite);
         size = new UWVector2(sprite_get_width(_sprite), sprite_get_height(_sprite));
     }
+    
+    /// @desc Renders a Sprite for 2D graphics.
     
     static DrawSprite = function()
     {
@@ -71,6 +78,8 @@ function UWSpriteRenderer(_sprite) : UWComponent(UW_SPRITE_RENDERER_TYPE_ID, UW_
             );
         }
     }
+    
+    /// @desc Increment saved image index of sprite renderer.
     
     static IncrementImageIndex = function(_amount)
     {

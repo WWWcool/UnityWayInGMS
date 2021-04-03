@@ -353,6 +353,13 @@ function UWPrefabFactory(_id, _actions) constructor
     actions = _actions;
     uw_objects = array_create(0);
     
+    /// @desc Create instance from prefab
+	///
+	/// @param {number} _x The x position the object will be created at
+	/// @param {number} _y The y position the object will be created at
+	/// @param {layer} _layer_id_or_name The layer ID (or name) to assign the created instance to
+	/// @return {object} created instance
+    
     static InstanceCreateLayer = function(_x, _y, _layer_id_or_name)
     {
         var debug = new UWUtilsDebug(UW_PREFAB_PREFIX);
