@@ -3,5 +3,5 @@
 
 var cmp = __uw_obj.GetComponentByTypeID(1);
 
-show_debug_message("Show button text: " + cmp.text);
+show_message("Show button text: " + cmp.text);
 

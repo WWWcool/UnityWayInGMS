@@ -7,7 +7,8 @@ event_inherited();
 var cmp = new MyComponentText("Button", c_white, c_black);
 cmp.move_text = true;
 __uw_obj.AddComponent(cmp);
-
-__uw_obj.AddComponent(new MyComponentTooltip(50, 50, "Press button to show debug message", c_black));
+cmp = new MyComponentTooltip(50, 50, "Press button to show message", c_black);
+cmp.w = 300;
+__uw_obj.AddComponent(cmp);
 
 image_speed = 0;

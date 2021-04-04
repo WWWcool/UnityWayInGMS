@@ -1,6 +1,7 @@
 // Unity way library. For more information see the documentation here:
 // https://github.com/WWWcool/UnityWayInGMS/wiki
 
+draw_set_font(__uw_f_components_demo);
 
 // We want to responce on mouse and draw text for out btn
 
@@ -41,6 +42,8 @@ function MyComponentTooltip(_shift_x, _shift_y, _text, _color) : UWComponent(2 /
 	shift_y = _shift_y;
 	text = _text;
 	color = _color;
+	w = 250;
+	h = 100;
 	
 	if_mouse_on = false;
 	
@@ -51,11 +54,11 @@ function MyComponentTooltip(_shift_x, _shift_y, _text, _color) : UWComponent(2 /
 			var _x = game_object.id.x + shift_x;
 			var _y = game_object.id.y + shift_y;
 			
-			draw_sprite_stretched(__uw_spr_components_demo_panel, 0, _x, _y, 250, 100);
+			draw_sprite_stretched(__uw_spr_components_demo_panel, 0, _x, _y, w, h);
 			draw_set_valign(fa_center);
 			draw_set_halign(fa_middle);
 			draw_set_color(color);
-			draw_text_ext(_x + 125, _y + 50, text, string_height(text) * 1.1, 200);
+			draw_text_ext(_x + w / 2, _y + h / 2, text, string_height(text) * 1.1, w * 0.8);
 		}
 	}
 	

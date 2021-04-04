@@ -6,7 +6,10 @@
 event_inherited();
 
 __uw_obj.AddComponent(new MyComponentText("Enter text...", c_white, c_green));
-__uw_obj.AddComponent(new MyComponentTooltip(50, -37.5, "Press mouse to start enter. Press enter or mouse to end", c_black));
+var cmp = new MyComponentTooltip(70, -37.5, "Press mouse to start enter. Press enter or mouse to end", c_black);
+cmp.w = 300;
+cmp.h = 150;
+__uw_obj.AddComponent(cmp);
 
 // reduce size of collision mask
 
