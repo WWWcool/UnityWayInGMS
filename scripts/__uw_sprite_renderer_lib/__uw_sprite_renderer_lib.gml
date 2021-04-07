@@ -54,7 +54,7 @@ function UWSpriteRenderer(_sprite) : UWComponent(UW_SPRITE_RENDERER_TYPE_ID, UW_
             return;
         
         var transform = game_object.transform;
-        if(flipX || flipY || alpha != 1 || transform.angle != 0)
+        if(flipX || flipY || alpha != 1 || transform.angle != 0 || !transform.lossy_scale.Equals(new UWVector2(1, 1)))
         {
             draw_sprite_ext(
                 sprite,

@@ -394,6 +394,7 @@ function UWComponentGroup(_type, _check_func, _exec_func) constructor
             }
         }
     }
+	
     
     /// @desc Execute all component in group
     /// @param {array} [_args] some args passed to exec function
